@@ -1,9 +1,10 @@
-package  jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox;
+
 /**
- * Created by atoze on 2017/06/06.
+ * メインメソッド
  */
 public class Main {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
     }
 }
