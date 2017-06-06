@@ -1,9 +1,12 @@
-group 'co.jp.topgate.atoze'
+group 'co.jp.topgate'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
+mainClassName = 'jp.co.topgate.atoze.web.Main'
 sourceCompatibility = 1.8
+
 
 repositories {
     mavenCentral()
