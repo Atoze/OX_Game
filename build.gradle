@@ -4,7 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'jp.co.topgate.atoze.web.Main'
+mainClassName = 'jp.co.topgate.atoze.ox.Main'
 sourceCompatibility = 1.8
 
 
