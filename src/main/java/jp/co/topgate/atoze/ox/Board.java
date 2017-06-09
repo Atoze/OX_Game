@@ -3,17 +3,18 @@ package jp.co.topgate.atoze.ox;
 /**
  * ゲームの状況を保管するクラス
  */
-abstract class Board {
-    private int currentTurn;
+interface Board {
+    abstract void insert(int playerId, int gridIndex);
 
-    abstract boolean insert(int playerId, int dataIndex);
+    abstract boolean isFilled(int gridIndex);
 
-    public void count() {
-        currentTurn++;
-    }
+    abstract int getRow();
 
-    public int getCurrentTurn() {
-        return currentTurn;
-    }
+    abstract int getColumn();
 
+    abstract int getLength();
+
+    abstract int getPlayerId(int gridIndex);
+
+    abstract int[] getBoard();
 }

@@ -1,11 +1,23 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * Created by atoze on 2017/06/06.
+ * 空いてるところをランダムに指定してくるCPUです.
  */
 public class EasyCPU extends ComputerPlayer {
+
+    EasyCPU(int id) {
+        super(id);
+    }
+
     @Override
-    public int next(Board board){
-        return 0;
+    public int next(Board board, Rule rule) {
+        int gridIndex;
+        while (true) {
+            gridIndex = (int) (Math.random() * board.getLength());
+            if (rule.accept(gridIndex)) {
+                break;
+            }
+        }
+        return gridIndex;
     }
 }
