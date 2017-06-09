@@ -10,11 +10,11 @@ public class EasyCPU extends ComputerPlayer {
     }
 
     @Override
-    public int next(Board board, Rule rule) {
+    public int next(ScreenBoard board) {
         int gridIndex;
         while (true) {
             gridIndex = (int) (Math.random() * board.getLength());
-            if (rule.accept(gridIndex)) {
+            if (board.accept(gridIndex)) {
                 break;
             }
         }

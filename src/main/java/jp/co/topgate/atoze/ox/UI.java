@@ -6,7 +6,7 @@ package jp.co.topgate.atoze.ox;
 public interface UI {
     void insert(Player player, int gridIndex);
 
-    void showBoard(Board board);
+    void turnStart(Player player, ScreenBoard board);
 
-    void showNotFilled(Board board);
+    void gameSet(Player player, ScreenBoard board, Result result);
 }

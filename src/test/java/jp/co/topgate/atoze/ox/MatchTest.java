@@ -1,5 +1,6 @@
 package jp.co.topgate.atoze.ox;
 
+import jp.co.topgate.atoze.ox.basic.SquaredBoard;
 import org.junit.Test;
 
 /**

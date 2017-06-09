@@ -1,4 +1,6 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.basic;
+
+import jp.co.topgate.atoze.ox.Board;
 
 /**
  * Created by atoze on 2017/06/06.
@@ -10,7 +12,7 @@ public class SquaredBoard implements Board {
     //private final String[] data;
     private final int[] board;
 
-    SquaredBoard(int sideLength) {
+    public SquaredBoard(int sideLength) {
         this.sideLength = sideLength;
         this.length = (int) Math.pow(sideLength, 2);
         this.board = new int[this.length];
@@ -21,7 +23,7 @@ public class SquaredBoard implements Board {
     }
 
     //TODO:returnより範囲外であることの例外を投げた方がよさげ
-    public void insert(int playerId, int column, int row) {
+    public final void insert(int playerId, int column, int row) {
         if (playerId <= DEFAULT_VALUE || column <= 0 || row <= 0 || column > sideLength || row > sideLength) {
             return;
         }
@@ -31,7 +33,7 @@ public class SquaredBoard implements Board {
     }
 
     @Override
-    public void insert(int playerId, int gridIndex) {
+    public final void insert(int playerId, int gridIndex) {
         if (playerId <= DEFAULT_VALUE || 0 > gridIndex || gridIndex > (length)) {
             return;
         }

@@ -1,4 +1,7 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.basic;
+
+import jp.co.topgate.atoze.ox.ComputerPlayer;
+import jp.co.topgate.atoze.ox.ScreenBoard;
 
 /**
  * Created by atoze on 2017/06/08.
@@ -10,7 +13,7 @@ public class NormalCPU extends ComputerPlayer {
     }
 
     @Override
-    public int next(Board board, Rule rule) {
+    public int next(ScreenBoard board) {
         int gridIndex;
 
         int shortSide = board.getColumn();
@@ -24,7 +27,7 @@ public class NormalCPU extends ComputerPlayer {
         int surplusSide = board.getLength() / (longSide * shortSide);
         while (true) {
             gridIndex = (int) (Math.random() * board.getLength());
-            if (!rule.accept(gridIndex)) {
+            if (board.accept(gridIndex)) {
                 break;
             }
         }

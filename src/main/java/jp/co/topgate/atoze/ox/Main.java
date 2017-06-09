@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Main {
     Scanner scanner;
 
-
     public static void main(String[] args) {
         List<Player> players = new ArrayList<>();
         players.add(new EasyCPU(1));

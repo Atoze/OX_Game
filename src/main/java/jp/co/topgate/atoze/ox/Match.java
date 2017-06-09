@@ -1,24 +1,24 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * 勝利判定を行うクラスです.
+ * 指定した場所から何個並んでいるかを見るクラスです.
  */
-public class Match {
-    public static boolean isRowAligned(Board board, int playerID, int gridIndex, int requiredAlignedNum) {
+class Match {
+    static boolean isRowAligned(ScreenBoard board, int playerID, int gridIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countRowAligned(board, playerID, gridIndex) + 1;
     }
 
-    public static boolean isColumnAligned(Board board, int playerID, int gridIndex, int requiredAlignedNum) {
+    static boolean isColumnAligned(ScreenBoard board, int playerID, int gridIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countColumnAligned(board, playerID, gridIndex) + 1;
     }
 
-    public static boolean isDiagonalAligned(Board board, int playerID, int gridIndex, int requiredAlignedNum) {
+    static boolean isDiagonalAligned(ScreenBoard board, int playerID, int gridIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countLeftTiltAligned(board, playerID, gridIndex) + 1 || requiredAlignedNum == countRightTiltAligned(board, playerID, gridIndex) + 1;
     }
 
 
     //自分を含まない数であることの注意
-    static int countRowAligned(Board board, int playerID, int gridIndex) {
+    static int countRowAligned(ScreenBoard board, int playerID, int gridIndex) {
         int row = board.getRow();
         int length = board.getLength();
         int lengthFromSide = gridIndex % row;
@@ -48,7 +48,7 @@ public class Match {
     }
 
     //自分を含まない数であることの注意
-    static int countColumnAligned(Board board, int playerID, int gridIndex) {
+    static int countColumnAligned(ScreenBoard board, int playerID, int gridIndex) {
         int column = board.getColumn();
         int row = board.getRow();
         int length = board.getLength();
@@ -80,7 +80,7 @@ public class Match {
     }
 
 
-    public static int countLeftTiltAligned(Board board, int playerID, int gridIndex) {
+    public static int countLeftTiltAligned(ScreenBoard board, int playerID, int gridIndex) {
         int column = board.getColumn();
         int row = board.getRow();
         int length = board.getLength();
@@ -118,7 +118,7 @@ public class Match {
     }
 
 
-    public static int countRightTiltAligned(Board board, int playerID, int gridIndex) {
+    public static int countRightTiltAligned(ScreenBoard board, int playerID, int gridIndex) {
         int column = board.getColumn();
         int row = board.getRow();
         int length = board.getLength();

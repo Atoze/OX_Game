@@ -21,16 +21,16 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int next(Board board, Rule rule) {
+    public int next(ScreenBoard board) {
         int gridIndex;
         while (true) {
-            System.out.println(name + "の番です  埋まってないマスの中から数字を選択して入力してエンターを押してください");
+            System.out.printf("%sの番です  埋まってないマスの中から数字を選択して入力してエンターを押してください\n", name);
             int input;
             while (true) {
                 Scanner sc = new Scanner(System.in);
                 try {
                     int i = sc.nextInt();
-                    if (rule.accept(i)) {
+                    if (board.accept(i)) {
                         gridIndex = i;
                         break;
                     } else {

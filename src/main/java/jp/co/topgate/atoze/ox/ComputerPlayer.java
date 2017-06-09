@@ -6,7 +6,7 @@ package jp.co.topgate.atoze.ox;
 public abstract class ComputerPlayer implements Player {
     private final int id;
 
-    ComputerPlayer(int id) {
+    public ComputerPlayer(int id) {
         this.id = id;
     }
 
