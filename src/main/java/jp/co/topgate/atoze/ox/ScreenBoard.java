@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * Boardクラスを表示するためのクラス　書き換えできないようにする
+ * Boardクラスを表示するためのクラス　書き換えできないように
  */
 public class ScreenBoard {
     private Board board;
@@ -30,7 +30,7 @@ public class ScreenBoard {
     }
 
     public int getLength() {
-        return board.getLength();
+        return board.getSize();
     }
 
     public int getPlayerId(int boardIndex) {

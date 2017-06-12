@@ -4,7 +4,7 @@ import jp.co.topgate.atoze.ox.ComputerPlayer;
 import jp.co.topgate.atoze.ox.ScreenBoard;
 
 /**
- * Created by atoze on 2017/06/08.
+ * コンピューターが操作するプレイヤー
  */
 public class NormalCPU extends ComputerPlayer {
 

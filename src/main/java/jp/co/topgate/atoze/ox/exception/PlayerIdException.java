@@ -5,6 +5,10 @@ package jp.co.topgate.atoze.ox.exception;
  */
 
 public class PlayerIdException extends Exception {
+    public PlayerIdException() {
+        super("許可されていないプレイヤーIDです");
+    }
+
     public PlayerIdException(String msg) {
         super(msg);
     }

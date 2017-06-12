@@ -7,7 +7,7 @@ import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 import java.util.List;
 
 /**
- * Created by atoze on 2017/06/06.
+ * ○×ゲームの処理
  */
 public class OXGame {
     private Board board;
@@ -30,9 +30,13 @@ public class OXGame {
         if (players.size() < PLAYER_MIN_NUM) {
             throw new PlayersOutOfBoundsException("必要なプレイヤー人数が足りていません");
         }
-
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getID() == board.getDefaultValue()) {
+                throw new PlayerIdException();
+            }
+        }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
-        this.MAX_TURN = board.getLength();
+        this.MAX_TURN = board.getSize();
         game();
     }
 

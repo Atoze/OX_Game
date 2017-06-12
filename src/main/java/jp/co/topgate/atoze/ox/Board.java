@@ -15,7 +15,7 @@ public interface Board {
 
     int getColumn();
 
-    int getLength();
+    int getSize();
 
     int getPlayerId(int boardIndex);
 

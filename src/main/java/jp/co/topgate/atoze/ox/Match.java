@@ -1,22 +1,62 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * Created by atoze on 2017/06/12.
+ * 一直線にいくつ並んだか判定するクラス
+ * 現在は2次元しか対応できません
  */
 public class Match {
+
+    /**
+     * 横列に指定したプレイヤー識別値が指定数分並んだか判定します
+     *
+     * @param board              表示用ボードクラス
+     * @param playerID           挿入するプレイヤーの識別値
+     * @param boardIndex         判定するボードの場所
+     *                           ここから左、右にみていきます
+     * @param requiredAlignedNum 指定数
+     * @return 判定する場所から左右に指定数並んだかどうか
+     */
     static boolean isRowAligned(ScreenBoard board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countRowAligned(board, playerID, boardIndex) + 1;
     }
 
+    /**
+     * 縦列に指定したプレイヤー識別値が指定数分並んだか判定します
+     *
+     * @param board              表示用ボードクラス
+     * @param playerID           挿入するプレイヤーの識別値
+     * @param boardIndex         判定するボードの場所
+     *                           ここから上、下にみていきます
+     * @param requiredAlignedNum 指定数
+     * @return 判定する場所から上下に指定数並んだかどうか
+     */
     static boolean isColumnAligned(ScreenBoard board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countColumnAligned(board, playerID, boardIndex) + 1;
     }
 
+    /**
+     * 斜めに指定したプレイヤー識別値が指定数分並んだか判定します
+     *
+     * @param board              表示用ボードクラス
+     * @param playerID           挿入するプレイヤーの識別値
+     * @param boardIndex         判定するボードの場所
+     *                           ここから左上、右下、右上、左下にみていきます
+     * @param requiredAlignedNum 指定数
+     * @return 判定する場所から斜めに指定数並んだかどうか
+     */
     static boolean isDiagonalAligned(ScreenBoard board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countLeftTiltAligned(board, playerID, boardIndex) + 1 || requiredAlignedNum == countRightTiltAligned(board, playerID, boardIndex) + 1;
     }
 
-    //自分を含まない数であることの注意
+    /**
+     * 横列に指定したプレイヤー識別値が指定した場からいくつ並んでいるか
+     *
+     * @param board      表示用ボードクラス
+     * @param playerID   挿入するプレイヤーの識別値
+     * @param boardIndex 判定するボードの場所
+     *                   ここから左、右にみていきます
+     * @return 並んだ数　なお、返す値に自分は含まれません
+     */
     static int countRowAligned(ScreenBoard board, int playerID, int boardIndex) {
         int row = board.getRow();
         int lengthFromSide = boardIndex % row;
@@ -46,7 +86,15 @@ public class Match {
         return rightCount + leftCount;
     }
 
-    //自分を含まない数であることの注意
+    /**
+     * 縦列に指定したプレイヤー識別値が指定した場からいくつ並んでいるか
+     *
+     * @param board      表示用ボードクラス
+     * @param playerID   挿入するプレイヤーの識別値
+     * @param boardIndex 判定するボードの場所
+     *                   ここから上、下にみていきます
+     * @return 並んだ数　なお、返す値に自分は含まれません
+     */
     static int countColumnAligned(ScreenBoard board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
@@ -78,6 +126,15 @@ public class Match {
     }
 
 
+    /**
+     * 左肩上がりに指定したプレイヤー識別値が指定した場からいくつ並んでいるか
+     *
+     * @param board      表示用ボードクラス
+     * @param playerID   挿入するプレイヤーの識別値
+     * @param boardIndex 判定するボードの場所
+     *                   ここから左上、右下にみていきます
+     * @return 並んだ数　なお、返す値に自分は含まれません
+     */
     public static int countLeftTiltAligned(ScreenBoard board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
@@ -115,7 +172,15 @@ public class Match {
         return upLeftCount + downRightCount;
     }
 
-
+    /**
+     * 右肩上がりに指定したプレイヤー識別値が指定した場からいくつ並んでいるか
+     *
+     * @param board      表示用ボードクラス
+     * @param playerID   挿入するプレイヤーの識別値
+     * @param boardIndex 判定するボードの場所
+     *                   ここから右上、左下にみていきます
+     * @return 並んだ数　なお、返す値に自分は含まれません
+     */
     public static int countRightTiltAligned(ScreenBoard board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();

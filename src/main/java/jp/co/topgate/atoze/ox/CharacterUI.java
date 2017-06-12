@@ -3,7 +3,7 @@ package jp.co.topgate.atoze.ox;
 import java.util.List;
 
 /**
- * Created by atoze on 2017/06/07.
+ * ターミナルにゲームの状況などのUIを出力するクラスです
  */
 public class CharacterUI implements UI {
     public final static int O = 1;

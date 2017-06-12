@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * メインメソッド
+ *　実行クラス
  */
 public class Main {
     Scanner scanner;

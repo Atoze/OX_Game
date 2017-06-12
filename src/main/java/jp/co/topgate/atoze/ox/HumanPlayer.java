@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Created by atoze on 2017/06/06.
+ * ターミナルから数字入力を受け付けるクラスです.
  */
 public class HumanPlayer implements Player {
     private String name = "プレイヤー";

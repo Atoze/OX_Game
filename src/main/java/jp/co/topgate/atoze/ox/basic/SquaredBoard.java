@@ -5,18 +5,18 @@ import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.PlayerIdException;
 
 /**
- * Created by atoze on 2017/06/06.
+ * 正方形のボードを持つクラス
  */
 public class SquaredBoard implements Board {
     private final static int DEFAULT_VALUE = -1;
     private final int sideLength;
-    private final int length;
+    private final int size;
     private final int[] board;
 
     public SquaredBoard(int sideLength) {
         this.sideLength = sideLength;
-        this.length = (int) Math.pow(sideLength, 2);
-        this.board = new int[this.length];
+        this.size = (int) Math.pow(sideLength, 2);
+        this.board = new int[this.size];
 
         for (int i = 0; i < this.board.length; i++) {
             board[i] = DEFAULT_VALUE;
@@ -34,10 +34,10 @@ public class SquaredBoard implements Board {
 
     @Override
     public final void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, PlayerIdException {
-        if (playerId == DEFAULT_VALUE){
+        if (playerId == DEFAULT_VALUE) {
             throw new PlayerIdException("許可されていないプレイヤーIDです");
         }
-        if (playerId <= DEFAULT_VALUE || 0 > boardIndex || boardIndex > (length)) {
+        if (playerId <= DEFAULT_VALUE || 0 > boardIndex || boardIndex >= (size)) {
             throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
         }
         board[boardIndex] = playerId;
@@ -59,8 +59,8 @@ public class SquaredBoard implements Board {
     }
 
     @Override
-    public int getLength() {
-        return length;
+    public int getSize() {
+        return size;
     }
 
     @Override
