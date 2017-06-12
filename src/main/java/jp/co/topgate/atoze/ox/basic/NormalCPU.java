@@ -14,7 +14,7 @@ public class NormalCPU extends ComputerPlayer {
 
     @Override
     public int next(ScreenBoard board) {
-        int gridIndex;
+        int boardIndex;
 
         int shortSide = board.getColumn();
         int longSide = board.getRow();
@@ -26,11 +26,11 @@ public class NormalCPU extends ComputerPlayer {
         }
         int surplusSide = board.getLength() / (longSide * shortSide);
         while (true) {
-            gridIndex = (int) (Math.random() * board.getLength());
-            if (board.accept(gridIndex)) {
+            boardIndex = (int) (Math.random() * board.getLength());
+            if (board.accept(boardIndex)) {
                 break;
             }
         }
-        return gridIndex;
+        return boardIndex;
     }
 }

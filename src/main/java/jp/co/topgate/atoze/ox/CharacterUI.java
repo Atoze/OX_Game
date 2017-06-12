@@ -1,17 +1,23 @@
 package jp.co.topgate.atoze.ox;
 
+import java.util.List;
+
 /**
  * Created by atoze on 2017/06/07.
  */
 public class CharacterUI implements UI {
-    public void insert(Player player, int gridIndex) {
-        System.out.printf("Player%d " + player.getName() + "が　%d番に挿入しました\n", player.getID(), gridIndex);
+    public final static int O = 1;
+    public final static int X = 2;
+
+
+    public void showInsert(Player player, ScreenBoard board, int boardIndex) {
+        System.out.printf("%s側 %sが　%d番に挿入しました\n", setCharacter(board, player.getID()), player.getName(), boardIndex);
         System.out.println("-----------------------------------------------");
         System.out.println();
     }
 
     public void turnStart(Player player, ScreenBoard board) {
-        System.out.printf("%sのターンです\n", player.getName());
+        System.out.printf("%s側　%sのターンです\n", setCharacter(board, player.getID()), player.getName());
         showBoard(board);
         System.out.println();
         System.out.println();
@@ -19,11 +25,21 @@ public class CharacterUI implements UI {
 
     }
 
-    public void gameSet(Player player, ScreenBoard board, Result result) {
+    public void gameSet(Player winner, List<Player> player, ScreenBoard board, Result result) {
         switch (result) {
             case WIN:
                 showBoard(board);
-                System.out.printf("Player%d %sの勝利\n", player.getID(), player.getName());
+                System.out.printf("%s側 %sの勝利\n", setCharacter(board, winner.getID()), winner.getName());
+                if (player.size() > 1) {
+                    for (int i = 0; i < player.size(); i++) {
+                        Player loser = player.get(i);
+                        if (loser != winner) {
+                            System.out.printf("%s側 %s", setCharacter(board, loser.getID()), loser.getName());
+                        }
+                    }
+                }
+                System.out.println("は負けました…");
+
                 break;
             case DRAW:
                 showBoard(board);
@@ -39,7 +55,7 @@ public class CharacterUI implements UI {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 System.out.print("[");
-                System.out.print(setCharacter(board.getPlayerId(j + (i * row))));
+                System.out.print(setCharacter(board, board.getPlayerId(j + (i * row))));
                 System.out.print("]");
             }
             System.out.print("\n");
@@ -76,15 +92,16 @@ public class CharacterUI implements UI {
         }
     }
 
-    private static String setCharacter(int playerId) {
+    private static String setCharacter(ScreenBoard board, int playerId) {
         switch (playerId) {
-            case -1:
-                return "   ";
-            case 1:
+            case O:
                 return " ○ ";
-            case 2:
+            case X:
                 return " × ";
             default:
+                if (playerId == board.getDefaultValue()) {
+                    return "   ";
+                }
                 return "P" + Integer.toString(playerId) + " ";
         }
     }

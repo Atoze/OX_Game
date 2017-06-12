@@ -1,6 +1,8 @@
 package jp.co.topgate.atoze.ox;
 
-import jp.co.topgate.atoze.ox.basic.SquaredBoard;
+import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.PlayerIdException;
+import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 
 import java.util.List;
 
@@ -13,27 +15,28 @@ public class OXGame {
     private UI ui;
 
     private int REQUIRED_ALIGNED_NUM;
+    private static final int PLAYER_MAX_NUM = 2;
+    private static final int PLAYER_MIN_NUM = 2;
 
-    public void playSquareBoard(int gridNum, List<Player> players, UI ui) {
-        Board board = new SquaredBoard(gridNum);
-        start(board, players, gridNum, ui);
-    }
+    private int MAX_TURN;
 
-    /*
-    OXGame(Board board, List<Player> players){
-        this.board = board;
-        this.players = players;
-    }*/
-
-    public void start(Board board, List<Player> players, int requiredAlignedNum, UI ui) {
+    public void start(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, BoardIndexOutOfBoundsException, PlayerIdException {
         this.board = board;
         this.ui = ui;
         this.players = players;
+        if (players.size() > PLAYER_MAX_NUM) {
+            throw new PlayersOutOfBoundsException("プレイヤー人数が多すぎます");
+        }
+        if (players.size() < PLAYER_MIN_NUM) {
+            throw new PlayersOutOfBoundsException("必要なプレイヤー人数が足りていません");
+        }
+
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
+        this.MAX_TURN = board.getLength();
         game();
     }
 
-    private void game() {
+    private void game() throws BoardIndexOutOfBoundsException, PlayerIdException {
         Result result = Result.GAME_GO_ON;
         int playerNum = players.size();
         int currentTurn = 0;
@@ -46,28 +49,27 @@ public class OXGame {
                 currentPlayer = players.get(i);
 
                 ui.turnStart(currentPlayer, screenBoard);
-                int gridIndex = currentPlayer.next(screenBoard);
-                ui.insert(currentPlayer, gridIndex);
-                board.insert(currentPlayer.getID(), gridIndex);
+                int boardIndex = currentPlayer.next(screenBoard);
+                ui.showInsert(currentPlayer, screenBoard, boardIndex);
+                board.insert(currentPlayer.getID(), boardIndex);
 
-                result = checkStatus(screenBoard, currentPlayer, gridIndex, currentTurn);
+                result = checkStatus(screenBoard, currentPlayer, boardIndex, currentTurn);
                 if (result != Result.GAME_GO_ON) {
                     break;
                 }
             }
         }
-        ui.gameSet(currentPlayer, screenBoard, result);
+        ui.gameSet(currentPlayer, players, screenBoard, result);
         System.exit(0);
     }
 
-
-    public Result checkStatus(ScreenBoard board, Player player, int gridIndex, int currentTurn) {
-        if (Match.isRowAligned(board, player.getID(), gridIndex, REQUIRED_ALIGNED_NUM) ||
-                Match.isColumnAligned(board, player.getID(), gridIndex, REQUIRED_ALIGNED_NUM) ||
-                Match.isDiagonalAligned(board, player.getID(), gridIndex, REQUIRED_ALIGNED_NUM)) {
+    public Result checkStatus(ScreenBoard board, Player player, int boardIndex, int currentTurn) {
+        if (Match.isRowAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
+                Match.isColumnAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
+                Match.isDiagonalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
             return Result.WIN;
         }
-        if (currentTurn > board.getLength() - 1) {
+        if (currentTurn > board.getLength() - 1 || currentTurn > MAX_TURN) {
             return Result.DRAW;
         }
         return Result.GAME_GO_ON;

@@ -1,6 +1,8 @@
 package jp.co.topgate.atoze.ox.basic;
 
 import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.PlayerIdException;
 
 /**
  * Created by atoze on 2017/06/06.
@@ -9,7 +11,6 @@ public class SquaredBoard implements Board {
     private final static int DEFAULT_VALUE = -1;
     private final int sideLength;
     private final int length;
-    //private final String[] data;
     private final int[] board;
 
     public SquaredBoard(int sideLength) {
@@ -22,27 +23,29 @@ public class SquaredBoard implements Board {
         }
     }
 
-    //TODO:returnより範囲外であることの例外を投げた方がよさげ
-    public final void insert(int playerId, int column, int row) {
-        if (playerId <= DEFAULT_VALUE || column <= 0 || row <= 0 || column > sideLength || row > sideLength) {
-            return;
+    public final void insert(int playerId, int column, int row) throws BoardIndexOutOfBoundsException, PlayerIdException {
+        if (column <= 0 || row <= 0 || column > sideLength || row > sideLength) {
+            throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
         }
 
-        int gridIndex = (column - 1) + ((row - 1) * sideLength);
-        insert(playerId, gridIndex);
+        int boardIndex = (column - 1) + ((row - 1) * sideLength);
+        insert(playerId, boardIndex);
     }
 
     @Override
-    public final void insert(int playerId, int gridIndex) {
-        if (playerId <= DEFAULT_VALUE || 0 > gridIndex || gridIndex > (length)) {
-            return;
+    public final void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, PlayerIdException {
+        if (playerId == DEFAULT_VALUE){
+            throw new PlayerIdException("許可されていないプレイヤーIDです");
         }
-        board[gridIndex] = playerId;
+        if (playerId <= DEFAULT_VALUE || 0 > boardIndex || boardIndex > (length)) {
+            throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
+        }
+        board[boardIndex] = playerId;
     }
 
     @Override
-    public boolean isFilled(int gridIndex) {
-        return !(board[gridIndex] == DEFAULT_VALUE);
+    public boolean isFilled(int boardIndex) {
+        return !(board[boardIndex] == DEFAULT_VALUE);
     }
 
     @Override
@@ -61,8 +64,13 @@ public class SquaredBoard implements Board {
     }
 
     @Override
-    public int getPlayerId(int gridIndex) {
-        return board[gridIndex];
+    public int getPlayerId(int boardIndex) {
+        return board[boardIndex];
+    }
+
+    @Override
+    public int getDefaultValue() {
+        return DEFAULT_VALUE;
     }
 
     @Override

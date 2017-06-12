@@ -22,25 +22,25 @@ public class HumanPlayer implements Player {
 
     @Override
     public int next(ScreenBoard board) {
-        int gridIndex;
+        int boardIndex;
         while (true) {
-            System.out.printf("%sの番です  埋まってないマスの中から数字を選択して入力してエンターを押してください\n", name);
+            System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
             int input;
             while (true) {
                 Scanner sc = new Scanner(System.in);
                 try {
                     int i = sc.nextInt();
                     if (board.accept(i)) {
-                        gridIndex = i;
+                        boardIndex = i;
                         break;
                     } else {
-                        System.out.printf("埋まってないマスの中から数字を選択して入力してエンターを押してください");
+                        System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
                     }
                 } catch (InputMismatchException e) {
-                    System.out.printf("埋まってないマスの中から数字を選択して入力してエンターを押してください");
+                    System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
                 }
             }
-            return gridIndex;
+            return boardIndex;
         }
     }
 

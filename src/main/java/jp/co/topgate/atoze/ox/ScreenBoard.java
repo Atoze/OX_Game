@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * Created by atoze on 2017/06/09.
+ * Boardクラスを表示するためのクラス　書き換えできないようにする
  */
 public class ScreenBoard {
     private Board board;
@@ -10,8 +10,8 @@ public class ScreenBoard {
         this.board = board;
     }
 
-    public boolean isFilled(int gridIndex) {
-        return board.isFilled(gridIndex);
+    public boolean isFilled(int boardIndex) {
+        return board.isFilled(boardIndex);
     }
 
     public boolean accept(int selectedGridIndex) {
@@ -33,7 +33,11 @@ public class ScreenBoard {
         return board.getLength();
     }
 
-    public int getPlayerId(int gridIndex) {
-        return board.getPlayerId(gridIndex);
+    public int getPlayerId(int boardIndex) {
+        return board.getPlayerId(boardIndex);
+    }
+
+    public int getDefaultValue() {
+        return board.getDefaultValue();
     }
 }
