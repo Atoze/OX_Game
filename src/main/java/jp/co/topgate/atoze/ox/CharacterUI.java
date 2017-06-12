@@ -65,7 +65,7 @@ public class CharacterUI implements UI {
     private void showNotFilled(ScreenBoard board) {
         int row = board.getRow();
         int column = board.getColumn();
-        int maxNumString = String.valueOf(board.getLength()).length();
+        int maxNumString = String.valueOf(board.getSize()).length();
 
         System.out.println("現在埋まっていないマスです.");
         for (int i = 0; i < row; i++) {

@@ -24,12 +24,10 @@ public class NormalCPU extends ComputerPlayer {
             longSide ^= shortSide;
             shortSide ^= longSide;
         }
-        int surplusSide = board.getLength() / (longSide * shortSide);
+        int surplusSide = board.getSize() / (longSide * shortSide);
         while (true) {
-            boardIndex = (int) (Math.random() * board.getLength());
-            if (board.accept(boardIndex)) {
-                break;
-            }
+            boardIndex = (int) (Math.random() * board.getSize());
+            break;
         }
         return boardIndex;
     }

@@ -60,7 +60,7 @@ public class Match {
     static int countRowAligned(ScreenBoard board, int playerID, int boardIndex) {
         int row = board.getRow();
         int lengthFromSide = boardIndex % row;
-        int length = board.getLength();
+        int length = board.getSize();
 
         int rightCount = 0;
         int leftCount = 0;
@@ -98,7 +98,7 @@ public class Match {
     static int countColumnAligned(ScreenBoard board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
-        int length = board.getLength();
+        int length = board.getSize();
         int lengthFromTop = (boardIndex / row) % column;
 
         int downCount = 0;
@@ -138,7 +138,7 @@ public class Match {
     public static int countLeftTiltAligned(ScreenBoard board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
-        int length = board.getLength();
+        int length = board.getSize();
 
         int lengthFromSide = boardIndex % row;
         int lengthFromTop = (boardIndex / row) % column;
@@ -184,7 +184,7 @@ public class Match {
     public static int countRightTiltAligned(ScreenBoard board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
-        int length = board.getLength();
+        int length = board.getSize();
 
         int lengthFromSide = boardIndex % row;
         int lengthFromTop = (boardIndex / row) % column;
