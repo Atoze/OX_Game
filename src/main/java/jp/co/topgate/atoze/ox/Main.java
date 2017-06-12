@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *　実行クラス
+ * 　実行クラス
  */
 public class Main {
     Scanner scanner;
@@ -19,7 +19,8 @@ public class Main {
         List<Player> players = new ArrayList<>();
         CharacterUI ui = new CharacterUI();
         players.add(new EasyCPU(ui.X));
-        players.add(new HumanPlayer(ui.O));
+        players.add(new EasyCPU(ui.O));
+        //players.add(new HumanPlayer(ui.O));
         try {
             playSquaredBoard(players, 6, ui);
         } catch (PlayersOutOfBoundsException | PlayerIdException | BoardIndexOutOfBoundsException e) {
