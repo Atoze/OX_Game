@@ -23,25 +23,17 @@ public class HumanPlayer implements Player {
     @Override
     public int next(ScreenBoard board) {
         int boardIndex;
+        System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
         while (true) {
-            System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-            int input;
-            while (true) {
-                Scanner sc = new Scanner(System.in);
-                try {
-                    int i = sc.nextInt();
-                    if (board.accept(i)) {
-                        boardIndex = i;
-                        break;
-                    } else {
-                        System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-                }
+            Scanner sc = new Scanner(System.in);
+            try {
+                boardIndex = sc.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
             }
-            return boardIndex;
         }
+        return boardIndex;
     }
 
     @Override

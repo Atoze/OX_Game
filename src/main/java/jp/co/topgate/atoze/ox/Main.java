@@ -7,22 +7,19 @@ import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * 　実行クラス
  */
 public class Main {
-    Scanner scanner;
-
     public static void main(String[] args) {
         List<Player> players = new ArrayList<>();
         CharacterUI ui = new CharacterUI();
         players.add(new EasyCPU(ui.X));
-        players.add(new EasyCPU(ui.O));
-        //players.add(new HumanPlayer(ui.O));
+        //players.add(new EasyCPU(ui.O));
+        players.add(new HumanPlayer(ui.O));
         try {
-            playSquaredBoard(players, 6, ui);
+            playSquaredBoard(players, 3, ui);
         } catch (PlayersOutOfBoundsException | PlayerIdException | BoardIndexOutOfBoundsException e) {
             e.printStackTrace();
             System.exit(1);

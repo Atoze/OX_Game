@@ -41,24 +41,30 @@ public class OXGame {
     }
 
     private void game() throws BoardIndexOutOfBoundsException, PlayerIdException {
-        Result result = Result.GAME_GO_ON;
+        Result result = Result.CONTINUE;
         int playerNum = players.size();
         int currentTurn = 0;
         Player currentPlayer = players.get(0);
         ScreenBoard screenBoard = new ScreenBoard(board);
 
-        while (result == Result.GAME_GO_ON) {
+        while (result == Result.CONTINUE) {
             for (int i = 0; i < playerNum; i++) {
                 currentTurn++;
                 currentPlayer = players.get(i);
 
                 ui.turnStart(currentPlayer, screenBoard);
-                int boardIndex = currentPlayer.next(screenBoard);
+                int boardIndex;
+                while (true) {
+                    boardIndex = currentPlayer.next(screenBoard);
+                    if (accept(boardIndex)) {
+                        break;
+                    }
+                }
                 ui.showInsert(currentPlayer, screenBoard, boardIndex);
                 board.insert(currentPlayer.getID(), boardIndex);
 
                 result = checkStatus(screenBoard, currentPlayer, boardIndex, currentTurn);
-                if (result != Result.GAME_GO_ON) {
+                if (result != Result.CONTINUE) {
                     break;
                 }
             }
@@ -73,9 +79,16 @@ public class OXGame {
                 Match.isDiagonalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
             return Result.WIN;
         }
-        if (currentTurn > board.getLength() - 1 || currentTurn > MAX_TURN) {
+        if (currentTurn > board.getSize() - 1 || currentTurn > MAX_TURN) {
             return Result.DRAW;
         }
-        return Result.GAME_GO_ON;
+        return Result.CONTINUE;
+    }
+
+    private boolean accept(int selectedGridIndex) {
+        if (selectedGridIndex < 0 || selectedGridIndex >= board.getSize()) {
+            return false;
+        }
+        return !board.isFilled(selectedGridIndex);
     }
 }

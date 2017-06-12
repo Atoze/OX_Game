@@ -14,13 +14,6 @@ public class ScreenBoard {
         return board.isFilled(boardIndex);
     }
 
-    public boolean accept(int selectedGridIndex) {
-        if (selectedGridIndex < 0 || selectedGridIndex >= getLength()) {
-            return false;
-        }
-        return !board.isFilled(selectedGridIndex);
-    }
-
     public int getRow() {
         return board.getRow();
     }
@@ -29,7 +22,7 @@ public class ScreenBoard {
         return board.getColumn();
     }
 
-    public int getLength() {
+    public int getSize() {
         return board.getSize();
     }
 
