@@ -1,12 +1,25 @@
 package jp.co.topgate.atoze.ox;
 
+import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.PlayerIdException;
+
 /**
  * ゲームの状況を保管するクラス
  */
-interface Board {
-    boolean insert(int playerID, int dataIndex);
+public interface Board {
+    void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, PlayerIdException;
 
-    void next();
+    boolean isFilled(int boardIndex);
 
-    int getCurrentTurn();
+    int getRow();
+
+    int getColumn();
+
+    int getSize();
+
+    int getPlayerId(int boardIndex);
+
+    int getDefaultValue();
+
+    int[] getBoard();
 }

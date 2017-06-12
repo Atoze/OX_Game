@@ -1,8 +1,12 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * Created by atoze on 2017/06/06.
+ * プレイヤークラス
  */
 interface Player {
-    int next(Board board);
+    int next(ScreenBoard board);
+
+    String getName();
+
+    int getID();
 }
