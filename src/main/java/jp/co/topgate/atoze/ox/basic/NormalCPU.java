@@ -1,15 +1,16 @@
 package jp.co.topgate.atoze.ox.basic;
 
-import jp.co.topgate.atoze.ox.ComputerPlayer;
+import jp.co.topgate.atoze.ox.Player;
 import jp.co.topgate.atoze.ox.ScreenBoard;
 
 /**
  * コンピューターが操作するプレイヤー
  */
-public class NormalCPU extends ComputerPlayer {
+public class NormalCPU implements Player {
+    private final int id;
 
     NormalCPU(int id) {
-        super(id);
+        this.id = id;
     }
 
     @Override
@@ -20,9 +21,13 @@ public class NormalCPU extends ComputerPlayer {
         int longSide = board.getRow();
 
         if (shortSide >= longSide) {
+            int temp = longSide;
+            longSide = shortSide;
+            shortSide = temp;
+            /*
             shortSide ^= longSide;
             longSide ^= shortSide;
-            shortSide ^= longSide;
+            shortSide ^= longSide;*/
         }
         int surplusSide = board.getSize() / (longSide * shortSide);
         while (true) {
@@ -30,5 +35,15 @@ public class NormalCPU extends ComputerPlayer {
             break;
         }
         return boardIndex;
+    }
+
+    @Override
+    public int getID() {
+        return id;
+    }
+
+    @Override
+    public String getName() {
+        return "コンピューター";
     }
 }

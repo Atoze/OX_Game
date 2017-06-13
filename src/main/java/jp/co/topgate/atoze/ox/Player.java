@@ -3,7 +3,7 @@ package jp.co.topgate.atoze.ox;
 /**
  * プレイヤークラス
  */
-interface Player {
+public interface Player {
     int next(ScreenBoard board);
 
     String getName();

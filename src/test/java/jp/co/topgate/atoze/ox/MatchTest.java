@@ -2,7 +2,7 @@ package jp.co.topgate.atoze.ox;
 
 import jp.co.topgate.atoze.ox.basic.SquaredBoard;
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.PlayerIdException;
+import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertThat;
@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class MatchTest {
     @Test
-    public void Match3on横並び確認テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void Match3on横並び確認テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         Match match = new Match();
         Board board = new SquaredBoard(3);
         board.insert(1, 0);
@@ -31,7 +31,7 @@ public class MatchTest {
     }
 
     @Test
-    public void Match3on縦並び確認テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void Match3on縦並び確認テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         Match match = new Match();
         Board board = new SquaredBoard(3);
         board.insert(1, 0);
@@ -49,7 +49,7 @@ public class MatchTest {
     }
 
     @Test
-    public void Match3on3斜め並び確認テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void Match3on3斜め並び確認テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         Match match = new Match();
         Board board = new SquaredBoard(3);
         board.insert(1, 0);

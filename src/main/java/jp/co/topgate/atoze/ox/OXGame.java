@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.PlayerIdException;
+import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class OXGame {
 
     private int MAX_TURN;
 
-    public void start(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, BoardIndexOutOfBoundsException, PlayerIdException {
+    OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException {
         this.board = board;
         this.ui = ui;
         this.players = players;
@@ -32,15 +32,14 @@ public class OXGame {
         }
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getID() == board.getDefaultValue()) {
-                throw new PlayerIdException();
+                throw new InvalidPlayerIdException();
             }
         }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
         this.MAX_TURN = board.getSize();
-        game();
     }
 
-    private void game() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         Result result = Result.CONTINUE;
         int playerNum = players.size();
         int currentTurn = 0;
@@ -52,7 +51,7 @@ public class OXGame {
                 currentTurn++;
                 currentPlayer = players.get(i);
 
-                ui.turnStart(currentPlayer, screenBoard);
+                ui.printStartTurn(currentPlayer, screenBoard);
                 int boardIndex;
                 while (true) {
                     boardIndex = currentPlayer.next(screenBoard);
@@ -69,11 +68,11 @@ public class OXGame {
                 }
             }
         }
-        ui.gameSet(currentPlayer, players, screenBoard, result);
+        ui.printGameResult(currentPlayer, players, screenBoard, result);
         System.exit(0);
     }
 
-    public Result checkStatus(ScreenBoard board, Player player, int boardIndex, int currentTurn) {
+    private Result checkStatus(ScreenBoard board, Player player, int boardIndex, int currentTurn) {
         if (Match.isRowAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
                 Match.isColumnAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
                 Match.isDiagonalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {

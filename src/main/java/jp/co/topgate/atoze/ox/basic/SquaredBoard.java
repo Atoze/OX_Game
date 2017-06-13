@@ -2,15 +2,33 @@ package jp.co.topgate.atoze.ox.basic;
 
 import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.PlayerIdException;
+import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 
 /**
- * 正方形のボードを持つクラス
+ * 正方形のボードでプレイする際に使用するBoard
  */
 public class SquaredBoard implements Board {
+
+    /**
+     * ボードの初期値.
+     * この値に一致するプレイヤーIDは、InvalidPlayerIdExceptionを返されます.
+     */
     private final static int DEFAULT_VALUE = -1;
+
+    /**
+     * ボードの一辺の長さです.
+     */
     private final int sideLength;
+
+    /**
+     * ボードが保持する配列の長さです.
+     */
     private final int size;
+
+    /**
+     * int型の配列にプレイヤー識別値を保管します.
+     * 初期値は、DEFAULT_VALUEで指定された値です.
+     */
     private final int[] board;
 
     public SquaredBoard(int sideLength) {
@@ -23,7 +41,7 @@ public class SquaredBoard implements Board {
         }
     }
 
-    public final void insert(int playerId, int column, int row) throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public final void insert(int playerId, int column, int row) throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         if (column <= 0 || row <= 0 || column > sideLength || row > sideLength) {
             throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
         }
@@ -33,9 +51,9 @@ public class SquaredBoard implements Board {
     }
 
     @Override
-    public final void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public final void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         if (playerId == DEFAULT_VALUE) {
-            throw new PlayerIdException("許可されていないプレイヤーIDです");
+            throw new InvalidPlayerIdException("許可されていないプレイヤーIDです");
         }
         if (playerId <= DEFAULT_VALUE || 0 > boardIndex || boardIndex >= (size)) {
             throw new BoardIndexOutOfBoundsException("ボードの範囲外です");

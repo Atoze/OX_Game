@@ -8,7 +8,7 @@ import java.util.List;
 public interface UI {
     void showInsert(Player player, ScreenBoard board, int boardIndex);
 
-    void turnStart(Player player, ScreenBoard board);
+    void printStartTurn(Player player, ScreenBoard board);
 
-    void gameSet(Player winner, List<Player> player, ScreenBoard board, Result result);
+    void printGameResult(Player winner, List<Player> player, ScreenBoard board, Result result);
 }

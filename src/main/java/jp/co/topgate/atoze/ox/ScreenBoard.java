@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * Boardクラスを表示するためのクラス　書き換えできないように
+ * Boardクラスを表示するためのクラス
  */
 public class ScreenBoard {
     private Board board;

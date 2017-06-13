@@ -9,90 +9,98 @@ public class CharacterUI implements UI {
     public final static int O = 1;
     public final static int X = 2;
 
+    private final static String LINE_FEED = System.getProperty("line.separator");
+
 
     public void showInsert(Player player, ScreenBoard board, int boardIndex) {
-        System.out.printf("%s側 %sが　%d番に挿入しました\n", setCharacter(board, player.getID()), player.getName(), boardIndex);
-        System.out.println("-----------------------------------------------");
-        System.out.println();
+        StringBuilder sb = new StringBuilder();
+        sb.append(changePlayerIdToCharacter(board, player.getID())).append("側");
+        sb.append(player.getName()).append("が");
+        sb.append(boardIndex).append("番に挿入しました").append(LINE_FEED);
+        sb.append("-----------------------------------------------");
+
+        System.out.println(sb.toString());
     }
 
-    public void turnStart(Player player, ScreenBoard board) {
-        System.out.printf("%s側　%sのターンです\n", setCharacter(board, player.getID()), player.getName());
+    public void printStartTurn(Player player, ScreenBoard board) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(changePlayerIdToCharacter(board, player.getID())).append("側 ");
+        sb.append(player.getName()).append("のターンです").append(LINE_FEED);
         showBoard(board);
-        System.out.println();
-        System.out.println();
+        System.out.println(sb.toString());
         showNotFilled(board);
-
     }
 
-    public void gameSet(Player winner, List<Player> player, ScreenBoard board, Result result) {
+    public void printGameResult(Player winner, List<Player> player, ScreenBoard board, Result result) {
+        StringBuilder sb = new StringBuilder();
         switch (result) {
             case WIN:
                 showBoard(board);
-                System.out.printf("%s側 %sの勝利\n", setCharacter(board, winner.getID()), winner.getName());
+                sb.append(changePlayerIdToCharacter(board, winner.getID())).append("側 ");
+                sb.append(winner.getName()).append("の勝利\n");
                 if (player.size() > 1) {
                     for (int i = 0; i < player.size(); i++) {
                         Player loser = player.get(i);
                         if (loser != winner) {
-                            System.out.printf("%s側 %s", setCharacter(board, loser.getID()), loser.getName());
+                            sb.append(changePlayerIdToCharacter(board, loser.getID())).append("側");
+                            sb.append(loser.getName());
                         }
                     }
                 }
-                System.out.println("は負けました…");
-
+                sb.append("は負けました…");
                 break;
             case DRAW:
                 showBoard(board);
-                System.out.println("引き分けです");
+                sb.append("引き分けです");
                 break;
         }
+        System.out.println(sb.toString());
     }
 
     private void showBoard(ScreenBoard board) {
         int row = board.getRow();
         int column = board.getColumn();
-
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                System.out.print("[");
-                System.out.print(setCharacter(board, board.getPlayerId(j + (i * row))));
-                System.out.print("]");
+                sb.append("[").append(changePlayerIdToCharacter(board, board.getPlayerId(j + (i * row)))).append("]");
             }
-            System.out.print("\n");
+            sb.append(LINE_FEED);
         }
+        System.out.println(sb.toString());
     }
 
     private void showNotFilled(ScreenBoard board) {
         int row = board.getRow();
         int column = board.getColumn();
         int maxNumString = String.valueOf(board.getSize()).length();
+        StringBuilder sb = new StringBuilder();
 
         System.out.println("現在埋まっていないマスです.");
+
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 int currentIndex = j + (i * row);
-
-                System.out.print("[");
+                sb.append("[");
                 if (board.isFilled(currentIndex)) {
-                    System.out.print(" ");
+                    sb.append("  ");
                     for (int x = 0; x < maxNumString; x++) {
-                        System.out.print(" ");
+                        sb.append(" ");
                     }
-                    System.out.print(" ");
                 } else {
-                    System.out.printf(" %d ", currentIndex);
-
+                    sb.append(" ").append(currentIndex).append(" ");
                     if (String.valueOf(currentIndex).length() < maxNumString) {
-                        System.out.print(" ");
+                        sb.append(" ");
                     }
                 }
-                System.out.print("]");
+                sb.append("]");
             }
-            System.out.print("\n");
+            sb.append(LINE_FEED);
         }
+        System.out.println(sb.toString());
     }
 
-    private static String setCharacter(ScreenBoard board, int playerId) {
+    private static String changePlayerIdToCharacter(ScreenBoard board, int playerId) {
         switch (playerId) {
             case O:
                 return " ○ ";
