@@ -2,6 +2,7 @@ package jp.co.topgate.atoze.ox.basic;
 
 import jp.co.topgate.atoze.ox.Player;
 import jp.co.topgate.atoze.ox.ScreenBoard;
+import jp.co.topgate.atoze.ox.UI;
 
 /**
  * コンピューターが操作するプレイヤー
@@ -14,7 +15,7 @@ public class NormalCPU implements Player {
     }
 
     @Override
-    public int next(ScreenBoard board) {
+    public int next(ScreenBoard board, UI ui) {
         int boardIndex;
 
         int shortSide = board.getColumn();

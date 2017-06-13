@@ -54,22 +54,21 @@ public class OXGame {
                 ui.printStartTurn(currentPlayer, screenBoard);
                 int boardIndex;
                 while (true) {
-                    boardIndex = currentPlayer.next(screenBoard);
+                    boardIndex = currentPlayer.next(screenBoard, ui);
                     if (accept(boardIndex)) {
                         break;
                     }
                 }
-                ui.showInsert(currentPlayer, screenBoard, boardIndex);
+                ui.printInsert(currentPlayer, screenBoard, boardIndex);
                 board.insert(currentPlayer.getID(), boardIndex);
 
                 result = checkStatus(screenBoard, currentPlayer, boardIndex, currentTurn);
+                ui.printGameResult(currentPlayer, players, screenBoard, result);
                 if (result != Result.CONTINUE) {
                     break;
                 }
             }
         }
-        ui.printGameResult(currentPlayer, players, screenBoard, result);
-        System.exit(0);
     }
 
     private Result checkStatus(ScreenBoard board, Player player, int boardIndex, int currentTurn) {

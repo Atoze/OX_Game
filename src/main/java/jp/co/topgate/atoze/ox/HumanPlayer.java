@@ -1,8 +1,5 @@
 package jp.co.topgate.atoze.ox;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 /**
  * ターミナルから数字入力を受け付けるクラスです.
  */
@@ -21,19 +18,8 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int next(ScreenBoard board) {
-        int boardIndex;
-        System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-        while (true) {
-            Scanner sc = new Scanner(System.in);
-            try {
-                boardIndex = sc.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-            }
-        }
-        return boardIndex;
+    public int next(ScreenBoard board, UI ui) {
+        return ui.next();
     }
 
     @Override

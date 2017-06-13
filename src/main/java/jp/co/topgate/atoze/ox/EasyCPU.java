@@ -11,7 +11,7 @@ public class EasyCPU implements Player {
     }
 
     @Override
-    public int next(ScreenBoard board) {
+    public int next(ScreenBoard board, UI ui) {
         return (int) (Math.random() * board.getSize());
     }
 

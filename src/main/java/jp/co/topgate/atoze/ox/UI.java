@@ -6,7 +6,9 @@ import java.util.List;
  * 表示を
  */
 public interface UI {
-    void showInsert(Player player, ScreenBoard board, int boardIndex);
+    void printInsert(Player player, ScreenBoard board, int boardIndex);
+
+    int next();
 
     void printStartTurn(Player player, ScreenBoard board);
 
