@@ -1,25 +1,9 @@
 package jp.co.topgate.atoze.ox;
 
-import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
-
 /**
  * ゲームの状況を保管するクラス
  */
 public interface Board {
-
-    int DEFAULT = -1;
-
-    /**
-     * ボードに指定したプレイヤーを対応するマスに書き込みます.
-     *
-     * @param playerId   プレイヤーを識別するID
-     * @param boardIndex ボードの番号
-     * @throws BoardIndexOutOfBoundsException 挿入するIDがボードの範囲外
-     * @throws InvalidPlayerIdException       プレイヤーIDが許可されていないIDである
-     */
-    void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, InvalidPlayerIdException;
-
     /**
      * 指定した番号がすでに埋まっているかどうか確認します.
      *
@@ -76,18 +60,4 @@ public interface Board {
      * @return ボード番号最大数
      */
     int getDefaultValue();
-
-    /**
-     * このボード番号の最大数を返します.
-     *
-     * @return ボード番号最大数
-     */
-    int[] getBoardValue();
-
-    /**
-     * このボード番号の最大数を返します.
-     *
-     * @return ボード番号最大数
-     */
-    Board clone();
 }

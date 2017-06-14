@@ -1,8 +1,5 @@
 package jp.co.topgate.atoze.ox;
 
-import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
-
 /**
  * 空いてるところをランダムに指定してくるCPUです.
  */
@@ -15,13 +12,14 @@ public class EasyCPU implements Player {
 
     @Override
     public int selectBoardIndex(Board board, UI ui) {
+        /*
         try {
             board.insert(1,4);
         } catch (BoardIndexOutOfBoundsException e) {
             e.printStackTrace();
         } catch (InvalidPlayerIdException e) {
             e.printStackTrace();
-        }
+        }*/
         return (int) (Math.random() * board.getSize());
     }
 

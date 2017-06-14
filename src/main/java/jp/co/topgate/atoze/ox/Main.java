@@ -31,7 +31,7 @@ public class Main {
      * //TODO:いずれOXGameFactoryみたいなのを作った方がよいかもしれない
      */
     private static void playSquaredBoard(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException {
-        Board board = new SquaredBoard(gridSize);
+        BoardImpl board = new SquaredBoard(gridSize);
         OXGame game = new OXGame(board, players, gridSize, ui);
         game.start();
     }

@@ -1,13 +1,13 @@
 package jp.co.topgate.atoze.ox.basic;
 
-import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.BoardImpl;
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 
 /**
  * 正方形のボードでプレイする際に使用するBoard
  */
-public class SquaredBoard implements Board, Cloneable {
+public class SquaredBoard extends BoardImpl{
 
     /**
      * ボードの初期値.
@@ -104,23 +104,5 @@ public class SquaredBoard implements Board, Cloneable {
     @Override
     public int getDefaultValue() {
         return DEFAULT_VALUE;
-    }
-
-    @Override
-    public int[] getBoardValue() {
-        return board;
-    }
-
-    @Override
-    public Board clone() {
-        SquaredBoard board;
-        try {
-            board = (SquaredBoard) super.clone();
-            board.board = this.board.clone();
-        } catch (CloneNotSupportedException e) {
-            board = new SquaredBoard(this.sideLength);
-            board.board = this.board.clone();
-        }
-        return board;
     }
 }
