@@ -5,7 +5,6 @@ import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 
-import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +16,10 @@ public class Main {
         List<Player> players = new ArrayList<>();
         UI ui = new CharacterUI();
         players.add(new EasyCPU(1));
-        //players.add(new EasyCPU(ui.O));
-        players.add(new HumanPlayer(2));
+        players.add(new EasyCPU(2));
+        //players.add(new HumanPlayer(2000000));
         try {
-            playSquaredBoard(players, 10, ui);
+            playSquaredBoard(players, 3, ui);
         } catch (PlayersOutOfBoundsException | InvalidPlayerIdException | BoardIndexOutOfBoundsException e) {
             e.printStackTrace();
             System.exit(1);

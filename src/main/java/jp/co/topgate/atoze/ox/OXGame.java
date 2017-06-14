@@ -10,7 +10,7 @@ import java.util.List;
  * ○×ゲームの処理
  */
 public class OXGame {
-    private Board board;
+    private static Board board;
     private List<Player> players;
     private UI ui;
 
@@ -18,9 +18,9 @@ public class OXGame {
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
 
-    private int MAX_TURN;
+    private final int MAX_TURN;
 
-    OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException {
+    OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException {
         this.board = board;
         this.ui = ui;
         this.players = players;
@@ -36,22 +36,25 @@ public class OXGame {
             }
         }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
-        this.MAX_TURN = board.getSize();
+        this.MAX_TURN = maxTurn;
+    }
+
+    OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException {
+        this(board, players, requiredAlignedNum, ui, board.getSize());
     }
 
     public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         Result result = Result.CONTINUE;
         int playerNum = players.size();
         int currentTurn = 0;
-        Player currentPlayer = players.get(0);
-        ScreenBoard screenBoard = new ScreenBoard(board);
+        Board screenBoard = board.clone();
 
         while (result == Result.CONTINUE) {
             for (int i = 0; i < playerNum; i++) {
                 currentTurn++;
-                currentPlayer = players.get(i);
-
+                Player currentPlayer = players.get(i);
                 ui.printStartTurn(currentPlayer, screenBoard);
+
                 int boardIndex;
                 while (true) {
                     boardIndex = currentPlayer.next(screenBoard, ui);
@@ -59,8 +62,9 @@ public class OXGame {
                         break;
                     }
                 }
-                ui.printInsert(currentPlayer, screenBoard, boardIndex);
                 board.insert(currentPlayer.getID(), boardIndex);
+                screenBoard = board.clone();
+                ui.printInsert(currentPlayer, screenBoard, boardIndex);
 
                 result = checkStatus(screenBoard, currentPlayer, boardIndex, currentTurn);
                 ui.printGameResult(currentPlayer, players, screenBoard, result);
@@ -71,7 +75,7 @@ public class OXGame {
         }
     }
 
-    private Result checkStatus(ScreenBoard board, Player player, int boardIndex, int currentTurn) {
+    private Result checkStatus(Board board, Player player, int boardIndex, int currentTurn) {
         if (Match.isRowAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
                 Match.isColumnAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
                 Match.isDiagonalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {

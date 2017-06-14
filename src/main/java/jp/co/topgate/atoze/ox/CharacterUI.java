@@ -11,7 +11,7 @@ public class CharacterUI implements UI {
     private final static String LINE_FEED = System.getProperty("line.separator");
 
     @Override
-    public void printInsert(Player player, ScreenBoard board, int boardIndex) {
+    public void printInsert(Player player, Board board, int boardIndex) {
         StringBuilder sb = new StringBuilder();
         sb.append(playerIdToString(player.getID())).append("側");
         sb.append(player.getName()).append("が");
@@ -38,22 +38,24 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public void printStartTurn(Player player, ScreenBoard board) {
+    public void printStartTurn(Player player, Board board) {
         StringBuilder sb = new StringBuilder();
         sb.append(playerIdToString(player.getID())).append("側 ");
         sb.append(player.getName()).append("のターンです").append(LINE_FEED);
         sb.append(emptyGridIndicatorToString(board));
+
         System.out.println(sb.toString());
 
     }
 
     @Override
-    public void printGameResult(Player winner, List<Player> player, ScreenBoard board, Result result) {
+    public void printGameResult(Player winner, List<Player> player, Board board, Result result) {
         StringBuilder sb = new StringBuilder();
         switch (result) {
             case CONTINUE:
                 sb.append("現在のボードの状況です.").append(LINE_FEED);
                 sb.append(boardToString(board));
+
                 System.out.println(sb.toString());
                 return;
             case WIN:
@@ -78,6 +80,7 @@ public class CharacterUI implements UI {
             case DRAW:
                 sb.append("引き分けです.最終的なボードの状況です.").append(LINE_FEED);
                 sb.append(boardToString(board));
+                System.out.println(sb.toString());
                 System.exit(0);
                 break;
             default:
@@ -87,7 +90,7 @@ public class CharacterUI implements UI {
 
     }
 
-    private String boardToString(ScreenBoard board) {
+    private String boardToString(Board board) {
         int row = board.getRow();
         int column = board.getColumn();
         StringBuilder sb = new StringBuilder();
@@ -103,10 +106,11 @@ public class CharacterUI implements UI {
             }
             sb.append(LINE_FEED);
         }
+
         return sb.toString();
     }
 
-    private String emptyGridIndicatorToString(ScreenBoard board) {
+    private String emptyGridIndicatorToString(Board board) {
         int row = board.getRow();
         int column = board.getColumn();
         int maxNumString = String.valueOf(board.getSize()).length();
@@ -129,7 +133,7 @@ public class CharacterUI implements UI {
                         sb.append(" ");
                     }
                 }
-                sb.append("]");
+                sb.append(" ]");
             }
             sb.append(LINE_FEED);
         }

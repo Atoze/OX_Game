@@ -16,10 +16,10 @@ public class EasyCPUTest {
     @Test
     public void 範囲内数字の確認テスト() {
         Player player = new EasyCPU(1);
-        ScreenBoard board = new ScreenBoard(new SquaredBoard(3));
+        Board board = new SquaredBoard(3);
         int i = 0;
         while (i < 100) {
-            assertThat(player.next(board), is(both(greaterThan(-1)).and(lessThan(9))));
+            assertThat(player.next(board, new CharacterUI()), is(both(greaterThan(-1)).and(lessThan(9))));
             i++;
         }
     }

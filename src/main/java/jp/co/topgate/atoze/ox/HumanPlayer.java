@@ -18,7 +18,7 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int next(ScreenBoard board, UI ui) {
+    public int next(Board board, UI ui) {
         return ui.next();
     }
 

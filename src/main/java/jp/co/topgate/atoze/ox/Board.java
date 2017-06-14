@@ -10,7 +10,8 @@ public interface Board {
 
     /**
      * ボードに指定したプレイヤーを対応するマスに書き込みます.
-     * @param playerId プレイヤーを識別するIDです.
+     *
+     * @param playerId   プレイヤーを識別するIDです.
      * @param boardIndex ボードの番号です.
      * @throws BoardIndexOutOfBoundsException
      * @throws InvalidPlayerIdException
@@ -30,4 +31,6 @@ public interface Board {
     int getDefaultValue();
 
     int[] getBoard();
+
+    Board clone();
 }

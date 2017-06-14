@@ -7,7 +7,7 @@ import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 /**
  * 正方形のボードでプレイする際に使用するBoard
  */
-public class SquaredBoard implements Board {
+public class SquaredBoard implements Board, Cloneable {
 
     /**
      * ボードの初期値.
@@ -29,7 +29,12 @@ public class SquaredBoard implements Board {
      * int型の配列にプレイヤー識別値を保管します.
      * 初期値は、DEFAULT_VALUEで指定された値です.
      */
-    private final int[] board;
+    private int[] board;
+
+    /**
+     * このボードが何次元状のものであるか
+     */
+    private static final int DIMENSION = 2;
 
     public SquaredBoard(int sideLength) {
         this.sideLength = sideLength;
@@ -93,6 +98,19 @@ public class SquaredBoard implements Board {
 
     @Override
     public int[] getBoard() {
+        return board;
+    }
+
+    @Override
+    public Board clone() {
+        SquaredBoard board;
+        try {
+            board = (SquaredBoard) super.clone();
+            board.board = this.board.clone();
+        } catch (CloneNotSupportedException e) {
+            board = new SquaredBoard(this.sideLength);
+            board.board = this.board.clone();
+        }
         return board;
     }
 }

@@ -1,11 +1,11 @@
 package jp.co.topgate.atoze.ox.basic;
 
+import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.Player;
-import jp.co.topgate.atoze.ox.ScreenBoard;
 import jp.co.topgate.atoze.ox.UI;
 
 /**
- * コンピューターが操作するプレイヤー
+ * 相手の3つ並ぶのを邪魔してくるだけのコンピューター
  */
 public class NormalCPU implements Player {
     private final int id;
@@ -15,7 +15,7 @@ public class NormalCPU implements Player {
     }
 
     @Override
-    public int next(ScreenBoard board, UI ui) {
+    public int next(Board board, UI ui) {
         int boardIndex;
 
         int shortSide = board.getColumn();
