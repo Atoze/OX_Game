@@ -82,6 +82,16 @@ public class SquaredBoard implements Board, Cloneable {
     }
 
     @Override
+    public int getMaxSideLength() {
+        return sideLength;
+    }
+
+    @Override
+    public int getMinSideLength() {
+        return sideLength;
+    }
+
+    @Override
     public int getSize() {
         return size;
     }
@@ -97,7 +107,7 @@ public class SquaredBoard implements Board, Cloneable {
     }
 
     @Override
-    public int[] getBoard() {
+    public int[] getBoardValue() {
         return board;
     }
 

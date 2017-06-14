@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 /**
- * ターミナルから数字入力を受け付けるクラスです.
+ * 外部から数字入力を受け付けることができるプレイヤーです.
  */
 public class HumanPlayer implements Player {
     private String name = "プレイヤー";
@@ -18,8 +18,8 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int next(Board board, UI ui) {
-        return ui.next();
+    public int selectBoardIndex(Board board, UI ui) {
+        return ui.forSelectBoardIndex();
     }
 
     @Override

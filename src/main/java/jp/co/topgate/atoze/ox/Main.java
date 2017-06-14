@@ -26,6 +26,10 @@ public class Main {
         }
     }
 
+    /**
+     * n*nのボードでn個並んだら勝利条件で遊ぶ場合
+     * //TODO:いずれOXGameFactoryみたいなのを作った方がよいかもしれない
+     */
     private static void playSquaredBoard(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException {
         Board board = new SquaredBoard(gridSize);
         OXGame game = new OXGame(board, players, gridSize, ui);

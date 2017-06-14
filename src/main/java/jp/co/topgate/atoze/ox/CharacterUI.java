@@ -22,7 +22,7 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public int next() {
+    public int forSelectBoardIndex() {
         int boardIndex;
         System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
         while (true) {
@@ -38,10 +38,10 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public void printStartTurn(Player player, Board board) {
+    public void printStartTurn(Player currentPlayer, List<Player> players, Board board) {
         StringBuilder sb = new StringBuilder();
-        sb.append(playerIdToString(player.getID())).append("側 ");
-        sb.append(player.getName()).append("のターンです").append(LINE_FEED);
+        sb.append(playerIdToString(currentPlayer.getID())).append("側 ");
+        sb.append(currentPlayer.getName()).append("のターンです").append(LINE_FEED);
         sb.append(emptyGridIndicatorToString(board));
 
         System.out.println(sb.toString());
@@ -49,7 +49,7 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public void printGameResult(Player winner, List<Player> player, Board board, Result result) {
+    public void printGameResult(Player currentPlayer, List<Player> player, Board board, Result result) {
         StringBuilder sb = new StringBuilder();
         switch (result) {
             case CONTINUE:
@@ -62,12 +62,12 @@ public class CharacterUI implements UI {
                 sb.append("勝負あり！").append(LINE_FEED).append("最終的なボードの状況です.").append(LINE_FEED);
                 sb.append(boardToString(board)).append(LINE_FEED);
 
-                sb.append(playerIdToString(winner.getID())).append("側 ");
-                sb.append(winner.getName()).append("の勝利\n");
+                sb.append(playerIdToString(currentPlayer.getID())).append("側 ");
+                sb.append(currentPlayer.getName()).append("の勝利\n");
                 if (player.size() > 1) {
                     for (int i = 0; i < player.size(); i++) {
                         Player loser = player.get(i);
-                        if (loser != winner) {
+                        if (loser != currentPlayer) {
                             sb.append(playerIdToString(loser.getID())).append("側 ");
                             sb.append(loser.getName());
                         }

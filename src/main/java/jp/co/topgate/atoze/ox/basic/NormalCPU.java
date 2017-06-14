@@ -5,7 +5,8 @@ import jp.co.topgate.atoze.ox.Player;
 import jp.co.topgate.atoze.ox.UI;
 
 /**
- * 相手の3つ並ぶのを邪魔してくるだけのコンピューター
+ * 相手が並ぶのを邪魔してくるだけのコンピューター
+ * 未実装
  */
 public class NormalCPU implements Player {
     private final int id;
@@ -15,7 +16,7 @@ public class NormalCPU implements Player {
     }
 
     @Override
-    public int next(Board board, UI ui) {
+    public int selectBoardIndex(Board board, UI ui) {
         int boardIndex;
 
         int shortSide = board.getColumn();

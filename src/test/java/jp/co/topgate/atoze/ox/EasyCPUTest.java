@@ -19,7 +19,7 @@ public class EasyCPUTest {
         Board board = new SquaredBoard(3);
         int i = 0;
         while (i < 100) {
-            assertThat(player.next(board, new CharacterUI()), is(both(greaterThan(-1)).and(lessThan(9))));
+            assertThat(player.selectBoardIndex(board, new CharacterUI()), is(both(greaterThan(-1)).and(lessThan(9))));
             i++;
         }
     }

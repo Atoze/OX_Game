@@ -11,11 +11,11 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Created by atoze on 2017/06/08.
  */
-public class MatchTest {
+public class MatchStatusTest {
     @Test
     public void Match3on横並び確認テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
-        Match match = new Match();
         Board board = new SquaredBoard(3);
+        MatchStatus match = new MatchStatus(3, board.getSize());
         board.insert(1, 0);
         assertThat(false, is(match.isRowAligned(board, 1, 1, 3)));
         board.insert(1, 2);
@@ -32,8 +32,8 @@ public class MatchTest {
 
     @Test
     public void Match3on縦並び確認テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
-        Match match = new Match();
         Board board = new SquaredBoard(3);
+        MatchStatus match = new MatchStatus(3, board.getSize());
         board.insert(1, 0);
         assertThat(false, is(match.isColumnAligned(board, 1, 6, 3)));
         board.insert(1, 3);
@@ -50,8 +50,9 @@ public class MatchTest {
 
     @Test
     public void Match3on3斜め並び確認テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
-        Match match = new Match();
         Board board = new SquaredBoard(3);
+        MatchStatus match = new MatchStatus(3, board.getSize());
+
         board.insert(1, 0);
         assertThat(false, is(match.isDiagonalAligned(board, 1, 4, 3)));
         board.insert(1, 8);
