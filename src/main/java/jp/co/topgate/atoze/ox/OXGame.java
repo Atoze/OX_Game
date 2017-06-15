@@ -18,7 +18,7 @@ public class OXGame {
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
 
-    private final MatchStatus match;
+    private final OXGameJudge match;
 
     OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
@@ -37,7 +37,7 @@ public class OXGame {
                 throw new InvalidPlayerIdException();
             }
         }
-        match = new MatchStatus(board, requiredAlignedNum, maxTurn);
+        match = new OXGameJudge(board, requiredAlignedNum, maxTurn);
     }
 
     OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {

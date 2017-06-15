@@ -14,8 +14,8 @@ public class Main {
         List<Player> players = new ArrayList<>();
         UI ui = new CharacterUI();
         players.add(new EasyCPU(1));
-        //players.add(new EasyCPU(2));
-        players.add(new HumanPlayer(2, ui));
+        players.add(new EasyCPU(2));
+        //players.add(new HumanPlayer(2, ui));
         try {
             playSquaredBoard(players, 3, ui);
         } catch (PlayersOutOfBoundsException | InvalidPlayerIdException | InvalidBoardSizeException | BoardIndexOutOfBoundsException | RequiredNumberAlignedOutOfBoundsException e) {
