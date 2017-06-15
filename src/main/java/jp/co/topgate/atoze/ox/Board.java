@@ -55,9 +55,10 @@ public interface Board {
     int getPlayerId(int boardIndex);
 
     /**
-     * このボード番号の最大数を返します.
+     * このボードの初期値を返します.
+     * 基本的にこの値と一致するプレイヤーIDはInvalidPlayerIdExceptionを投げることを想定してます.
      *
-     * @return ボード番号最大数
+     * @return ボードの初期値
      */
     int getDefaultValue();
 }
