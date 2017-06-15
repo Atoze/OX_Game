@@ -61,4 +61,11 @@ public interface Board {
      * @return ボードの初期値
      */
     int getDefaultValue();
+
+    /**
+     * ボード上で、指定したプレイヤーIDがボードの位置から何かしらの形で並んだかを判定します
+     *
+     * @return 並んだか否か
+     */
+    boolean isAligned(int playerID, int boardIndex, int requiredAlignedNum);
 }
