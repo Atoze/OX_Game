@@ -11,18 +11,18 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by atoze on 2017/06/08.
  */
-public class MatchStatusTest {
+public class OXGameJudgeTest {
     @Test
     public void コンティニューテスト() throws RequiredNumberAlignedOutOfBoundsException {
         BoardImpl board = new TestBoard(3, 3);
-        MatchStatus match = new MatchStatus(board, 3, board.getSize());
+        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
         assertThat(Result.CONTINUE, is(match.checkResult(board, new EasyCPU(1),0,0)));
     }
 
     @Test
     public void ターン経過引き分けテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         BoardImpl board = new TestBoard(3, 3);
-        MatchStatus match = new MatchStatus(board, 3, board.getSize());
+        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
         board.insert(1,0);
         board.insert(2,1);
         board.insert(3,2);
@@ -38,7 +38,7 @@ public class MatchStatusTest {
     @Test
     public void 勝利したテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         BoardImpl board = new TestBoard(3, 3);
-        MatchStatus match = new MatchStatus(board, 3, board.getSize());
+        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
         Player player = new EasyCPU(1);
 
         board.insert(player.getID(),0);
@@ -49,7 +49,7 @@ public class MatchStatusTest {
     @Test
     public void 勝利がターンギリギリテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         BoardImpl board = new TestBoard(3, 3);
-        MatchStatus match = new MatchStatus(board, 3, board.getSize());
+        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
         Player player = new EasyCPU(1);
 
         board.insert(player.getID(),0);
@@ -60,6 +60,6 @@ public class MatchStatusTest {
     @Test(expected = RequiredNumberAlignedOutOfBoundsException.class)
     public void 達成できない勝利条件エラー() throws RequiredNumberAlignedOutOfBoundsException {
         BoardImpl board = new TestBoard(3, 3);
-        new MatchStatus(board, 5, board.getSize());
+        new OXGameJudge(board, 5, board.getSize());
     }
 }

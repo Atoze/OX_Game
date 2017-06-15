@@ -5,12 +5,12 @@ import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsExceptio
 /**
  * 勝利判定を行うクラス
  */
-public class MatchStatus {
+public class OXGameJudge {
 
     private final int REQUIRED_ALIGNED_NUM;
     private final int MAX_TURN;
 
-    public MatchStatus(Board board, int requiredAlignedNum, int maxTurn) throws RequiredNumberAlignedOutOfBoundsException {
+    public OXGameJudge(Board board, int requiredAlignedNum, int maxTurn) throws RequiredNumberAlignedOutOfBoundsException {
         if (requiredAlignedNum <= 0) {
             throw new RequiredNumberAlignedOutOfBoundsException("一列に並べられる数ではありません");
         }
