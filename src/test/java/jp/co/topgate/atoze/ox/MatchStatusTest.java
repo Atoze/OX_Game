@@ -56,7 +56,7 @@ public class MatchStatusTest {
 
         board.insert(player.getID(),0);
         board.insert(player.getID(),1);
-        assertThat(Result.WIN, is(match.checkResult(board, player,2,9)));
+        assertThat(Result.WIN, is(match.checkResult(board, player,2, board.getSize())));
     }
 
     //優先度的にはDRAW > WIN
