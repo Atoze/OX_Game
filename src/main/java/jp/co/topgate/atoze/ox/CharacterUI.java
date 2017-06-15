@@ -22,7 +22,7 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public int forSelectBoardIndex() {
+    public int selectBoardIndex() {
         int boardIndex;
         System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
         while (true) {

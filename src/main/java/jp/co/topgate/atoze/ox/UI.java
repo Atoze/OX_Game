@@ -19,7 +19,7 @@ public interface UI {
     /**
      * 外部から挿入したい数を受け付ける際のインターフェースを決定します.
      */
-    int forSelectBoardIndex();
+    int selectBoardIndex();
 
     /**
      * ターンの始めに表示される内容です.
