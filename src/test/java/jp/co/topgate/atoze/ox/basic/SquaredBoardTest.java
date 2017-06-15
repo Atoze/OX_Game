@@ -1,7 +1,8 @@
 package jp.co.topgate.atoze.ox.basic;
 
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.PlayerIdException;
+import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
+import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -12,7 +13,7 @@ import static org.junit.Assert.assertThat;
  */
 public class SquaredBoardTest {
     @Test
-    public void 挿入テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void 挿入テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException, InvalidBoardSizeException {
         SquaredBoard board = new SquaredBoard(3);
         for (int i = 0; i < (3 * 3); i++) {
             board.insert(1, i);
@@ -21,19 +22,19 @@ public class SquaredBoardTest {
     }
 
     @Test(expected = BoardIndexOutOfBoundsException.class)
-    public void 上限超えた範囲外テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void 上限超えた範囲外テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException, InvalidBoardSizeException {
         SquaredBoard board = new SquaredBoard(3);
         board.insert(1, 9);
     }
 
     @Test(expected = BoardIndexOutOfBoundsException.class)
-    public void 下限超えた範囲外テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void 下限超えた範囲外テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException, InvalidBoardSizeException {
         SquaredBoard board = new SquaredBoard(3);
         board.insert(1, -1);
     }
 
     @Test
-    public void 行列指定挿入テスト() throws BoardIndexOutOfBoundsException, PlayerIdException {
+    public void 行列指定挿入テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException, InvalidBoardSizeException {
         SquaredBoard board = new SquaredBoard(3);
         board.insert(1, 1, 1);
         assertThat(board.isFilled(0), is(true));

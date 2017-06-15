@@ -1,39 +1,26 @@
 package jp.co.topgate.atoze.ox;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 /**
- * ターミナルから数字入力を受け付けるクラスです.
+ * 外部から数字入力を受け付けることができるプレイヤーです.
  */
 public class HumanPlayer implements Player {
-    private String name = "プレイヤー";
+    private final String name;
     private final int id;
+    private final UI ui;
 
-    HumanPlayer(int id) {
-        this.id = id;
-        this.name = name + id + "さん";
+    HumanPlayer(int id, UI ui) {
+        this(id, "プレイヤー", ui);
     }
 
-    HumanPlayer(int id, String name) {
+    HumanPlayer(int id, String name, UI ui) {
         this.id = id;
         this.name = name + "さん";
+        this.ui = ui;
     }
 
     @Override
-    public int next(ScreenBoard board) {
-        int boardIndex;
-        System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-        while (true) {
-            Scanner sc = new Scanner(System.in);
-            try {
-                boardIndex = sc.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
-            }
-        }
-        return boardIndex;
+    public int selectBoardIndex(Board board) {
+        return ui.forSelectBoardIndex();
     }
 
     @Override

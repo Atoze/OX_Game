@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox.exception;
 
 /**
- * Created by atoze on 2017/05/26.
+ * プレイヤー人数が不適切であった場合に投げられる例外
  */
 
 public class PlayersOutOfBoundsException extends Exception {

@@ -1,9 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 import jp.co.topgate.atoze.ox.basic.SquaredBoard;
-import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
-import jp.co.topgate.atoze.ox.exception.PlayerIdException;
-import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,22 +12,26 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<Player> players = new ArrayList<>();
-        CharacterUI ui = new CharacterUI();
-        players.add(new EasyCPU(ui.X));
-        //players.add(new EasyCPU(ui.O));
-        players.add(new HumanPlayer(ui.O));
+        UI ui = new CharacterUI();
+        players.add(new EasyCPU(1));
+        //players.add(new EasyCPU(2));
+        players.add(new HumanPlayer(2, ui));
         try {
             playSquaredBoard(players, 3, ui);
-        } catch (PlayersOutOfBoundsException | PlayerIdException | BoardIndexOutOfBoundsException e) {
+        } catch (PlayersOutOfBoundsException | InvalidPlayerIdException | InvalidBoardSizeException | BoardIndexOutOfBoundsException | RequiredNumberAlignedOutOfBoundsException e) {
             e.printStackTrace();
             System.exit(1);
         }
     }
 
-    private static void playSquaredBoard(List<Player> players, int gridNum, UI ui) throws PlayersOutOfBoundsException, PlayerIdException, BoardIndexOutOfBoundsException {
-        Board board = new SquaredBoard(gridNum);
-        OXGame game = new OXGame();
-        game.start(board, players, gridNum, ui);
+    /**
+     * n*nのボードでn個並んだら勝利条件で遊ぶ場合
+     * //TODO:いずれOXGameFactoryみたいなのを作った方がよいかもしれない
+     */
+    private static void playSquaredBoard(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
+        BoardImpl board = new SquaredBoard(gridSize);
+        OXGame game = new OXGame(board, players, gridSize, ui);
+        game.start();
     }
 
 

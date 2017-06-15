@@ -1,10 +1,63 @@
 package jp.co.topgate.atoze.ox;
 
+import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsException;
+
 /**
- * 一直線にいくつ並んだか判定するクラス
- * 現在は2次元しか対応できません
+ * 勝利判定を行うクラス
  */
-public class Match {
+public class MatchStatus {
+
+    private final int REQUIRED_ALIGNED_NUM;
+    private final int MAX_TURN;
+
+    public MatchStatus(Board board, int requiredAlignedNum, int maxTurn) throws RequiredNumberAlignedOutOfBoundsException {
+        if (requiredAlignedNum <= 0) {
+            throw new RequiredNumberAlignedOutOfBoundsException("一列に並べられる数ではありません");
+        }
+        if (board.getMinSideLength() < requiredAlignedNum) {
+            throw new RequiredNumberAlignedOutOfBoundsException("勝利条件に用いられる一列に必要な数が、ボード上に斜めに並べる数を超えています");
+        }
+        if (board.getMaxSideLength() < requiredAlignedNum) {
+            throw new RequiredNumberAlignedOutOfBoundsException("勝利条件に用いられる一列に必要な数が、ボード上に並べる数を超えています");
+        }
+        this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
+        this.MAX_TURN = maxTurn;
+    }
+
+    /**
+     * ゲームの現状の判定を行います.
+     * <p>
+     * 現在のルールは、以下の通りです.
+     * 勝利判定:
+     * 値を挿入したプレイヤーのIDが、ボード上でREQUIRED_ALIGNED_NUM分一列に並んだ場合
+     * <p>
+     * 引き分け判定:
+     * 決められたターン数あるいはボードの最大値に一致するターンまでに以内にいずれのプレイヤーも勝利判定をクリアできなかった場合
+     * <p>
+     * 続行判定:
+     * 上記二つどちらにも当てはまらない場合
+     *
+     * @param board       ボードクラス
+     * @param player      判定するプレイヤー
+     * @param boardIndex  判定するボードの番号
+     * @param currentTurn 　現在のターン
+     */
+    public Result checkResult(Board board, Player player, int boardIndex, int currentTurn) {
+        if (isRowAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
+                isColumnAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
+                isDiagonalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
+            return Result.WIN;
+        }
+        if (currentTurn >= board.getSize() || currentTurn > MAX_TURN) {
+            return Result.DRAW;
+        }
+        return Result.CONTINUE;
+    }
+
+    /*
+     * ここから下は一直線にいくつ並んだか判定するために使うメソッド群です
+     * 現在は2次元しか対応できません
+     */
 
     /**
      * 横列に指定したプレイヤー識別値が指定数分並んだか判定します
@@ -16,7 +69,7 @@ public class Match {
      * @param requiredAlignedNum 指定数
      * @return 判定する場所から左右に指定数並んだかどうか
      */
-    static boolean isRowAligned(ScreenBoard board, int playerID, int boardIndex, int requiredAlignedNum) {
+    static boolean isRowAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countRowAligned(board, playerID, boardIndex) + 1;
     }
 
@@ -30,7 +83,7 @@ public class Match {
      * @param requiredAlignedNum 指定数
      * @return 判定する場所から上下に指定数並んだかどうか
      */
-    static boolean isColumnAligned(ScreenBoard board, int playerID, int boardIndex, int requiredAlignedNum) {
+    static boolean isColumnAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countColumnAligned(board, playerID, boardIndex) + 1;
     }
 
@@ -44,7 +97,7 @@ public class Match {
      * @param requiredAlignedNum 指定数
      * @return 判定する場所から斜めに指定数並んだかどうか
      */
-    static boolean isDiagonalAligned(ScreenBoard board, int playerID, int boardIndex, int requiredAlignedNum) {
+    static boolean isDiagonalAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countLeftTiltAligned(board, playerID, boardIndex) + 1 || requiredAlignedNum == countRightTiltAligned(board, playerID, boardIndex) + 1;
     }
 
@@ -57,7 +110,7 @@ public class Match {
      *                   ここから左、右にみていきます
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
-    static int countRowAligned(ScreenBoard board, int playerID, int boardIndex) {
+    static int countRowAligned(Board board, int playerID, int boardIndex) {
         int row = board.getRow();
         int lengthFromSide = boardIndex % row;
         int length = board.getSize();
@@ -95,7 +148,7 @@ public class Match {
      *                   ここから上、下にみていきます
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
-    static int countColumnAligned(ScreenBoard board, int playerID, int boardIndex) {
+    static int countColumnAligned(Board board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
         int length = board.getSize();
@@ -135,7 +188,7 @@ public class Match {
      *                   ここから左上、右下にみていきます
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
-    public static int countLeftTiltAligned(ScreenBoard board, int playerID, int boardIndex) {
+    public static int countLeftTiltAligned(Board board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
         int length = board.getSize();
@@ -181,7 +234,7 @@ public class Match {
      *                   ここから右上、左下にみていきます
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
-    public static int countRightTiltAligned(ScreenBoard board, int playerID, int boardIndex) {
+    public static int countRightTiltAligned(Board board, int playerID, int boardIndex) {
         int column = board.getColumn();
         int row = board.getRow();
         int length = board.getSize();

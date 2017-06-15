@@ -1,7 +1,7 @@
 package jp.co.topgate.atoze.ox.exception;
 
 /**
- * Created by atoze on 2017/05/26.
+ * ボードの範囲を超えた場合に投げられる例外
  */
 
 public class BoardIndexOutOfBoundsException extends Exception {
