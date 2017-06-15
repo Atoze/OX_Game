@@ -59,7 +59,7 @@ public class OXGame {
                 while (true) {
                     //TODO:もし設置に制限があったり、勝利条件をCPU側が参照したい際は、Ruleクラスにまとめるといいかもしれない
                     //TODO:勝利条件はn個一列に並ぶ、なのでその変数nの値さえ知れば後は共通した勝利条件なので把握したも同じである
-                    boardIndex = currentPlayer.selectBoardIndex(board, ui);
+                    boardIndex = currentPlayer.selectBoardIndex(board);
                     if (accept(boardIndex)) {
                         break;
                     }

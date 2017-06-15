@@ -11,7 +11,7 @@ public class EasyCPU implements Player {
     }
 
     @Override
-    public int selectBoardIndex(Board board, UI ui) {
+    public int selectBoardIndex(Board board) {
         /*
         try {
             board.insert(1,4);

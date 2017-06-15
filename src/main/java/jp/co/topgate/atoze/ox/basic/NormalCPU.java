@@ -2,7 +2,6 @@ package jp.co.topgate.atoze.ox.basic;
 
 import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.Player;
-import jp.co.topgate.atoze.ox.UI;
 
 /**
  * 相手が並ぶのを邪魔してくるだけのコンピューター
@@ -16,7 +15,7 @@ public class NormalCPU implements Player {
     }
 
     @Override
-    public int selectBoardIndex(Board board, UI ui) {
+    public int selectBoardIndex(Board board) {
         int boardIndex;
 
         int shortSide = board.getColumn();
