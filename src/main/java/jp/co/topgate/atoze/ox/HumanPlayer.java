@@ -20,7 +20,7 @@ public class HumanPlayer implements Player {
 
     @Override
     public int selectBoardIndex(Board board) {
-        return ui.forSelectBoardIndex();
+        return ui.selectBoardIndex();
     }
 
     @Override

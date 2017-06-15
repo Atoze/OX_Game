@@ -36,6 +36,7 @@ public class SquaredBoardTest {
     @Test
     public void 行列指定挿入テスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException, InvalidBoardSizeException {
         SquaredBoard board = new SquaredBoard(3);
+        assertThat(board.isFilled(0), is(false));
         board.insert(1, 1, 1);
         assertThat(board.isFilled(0), is(true));
 

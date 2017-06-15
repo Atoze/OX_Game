@@ -45,33 +45,28 @@ public class OXGame {
     }
 
     public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
-        Result result = Result.CONTINUE;
-        int playerNum = players.size();
         int currentTurn = 0;
+        while (true) {
+            currentTurn++;
+            Player currentPlayer = players.get(currentTurn % players.size());
+            ui.printStartTurn(currentPlayer, players, board);
 
-        while (result == Result.CONTINUE) {
-            for (int i = 0; i < playerNum; i++) {
-                currentTurn++;
-                Player currentPlayer = players.get(i);
-                ui.printStartTurn(currentPlayer, players, board);
-
-                int boardIndex;
-                while (true) {
-                    //TODO:もし設置に制限があったり、勝利条件をCPU側が参照したい際は、Ruleクラスにまとめるといいかもしれない
-                    //TODO:勝利条件はn個一列に並ぶ、なのでその変数nの値さえ知れば後は共通した勝利条件なので把握したも同じである
-                    boardIndex = currentPlayer.selectBoardIndex(board);
-                    if (accept(boardIndex)) {
-                        break;
-                    }
-                }
-                this.board.insert(currentPlayer.getID(), boardIndex);
-                ui.printInsert(currentPlayer, board, boardIndex);
-
-                result = match.checkResult(board, currentPlayer, boardIndex, currentTurn);
-                ui.printGameResult(currentPlayer, players, board, result);
-                if (result != Result.CONTINUE) {
+            int boardIndex;
+            while (true) {
+                //TODO:もし設置に制限があったり、勝利条件をCPU側が参照したい際は、Ruleクラスにまとめるといいかもしれない
+                //TODO:勝利条件はn個一列に並ぶ、なのでその変数nの値さえ知れば後は共通した勝利条件なので把握したも同じである
+                boardIndex = currentPlayer.selectBoardIndex(board);
+                if (accept(boardIndex)) {
                     break;
                 }
+            }
+            this.board.insert(currentPlayer.getID(), boardIndex);
+            ui.printInsert(currentPlayer, board, boardIndex);
+
+            Result result = match.checkResult(board, currentPlayer, boardIndex, currentTurn);
+            ui.printGameResult(currentPlayer, players, board, result);
+            if (result != Result.CONTINUE) {
+                break;
             }
         }
     }
