@@ -45,13 +45,10 @@ public class OXGame {
     }
 
     public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
-        Result result = Result.CONTINUE;
-        int playerNum = players.size();
         int currentTurn = 0;
-
-        while (result == Result.CONTINUE) {
+        while (true) {
             currentTurn++;
-            Player currentPlayer = players.get(currentTurn % playerNum);
+            Player currentPlayer = players.get(currentTurn % players.size());
             ui.printStartTurn(currentPlayer, players, board);
 
             int boardIndex;
@@ -66,7 +63,7 @@ public class OXGame {
             this.board.insert(currentPlayer.getID(), boardIndex);
             ui.printInsert(currentPlayer, board, boardIndex);
 
-            result = match.checkResult(board, currentPlayer, boardIndex, currentTurn);
+            Result result = match.checkResult(board, currentPlayer, boardIndex, currentTurn);
             ui.printGameResult(currentPlayer, players, board, result);
             if (result != Result.CONTINUE) {
                 break;
