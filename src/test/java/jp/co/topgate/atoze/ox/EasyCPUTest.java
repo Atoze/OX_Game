@@ -1,6 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
 import jp.co.topgate.atoze.ox.basic.SquaredBoard;
+import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.both;
@@ -14,7 +15,7 @@ import static org.hamcrest.Matchers.greaterThan;
  */
 public class EasyCPUTest {
     @Test
-    public void 範囲内数字の確認テスト() {
+    public void 範囲内数字の確認テスト() throws InvalidBoardSizeException {
         Player player = new EasyCPU(1);
         Board board = new SquaredBoard(3);
         int i = 0;
