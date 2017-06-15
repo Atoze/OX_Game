@@ -43,13 +43,13 @@ public class MatchStatus {
      * @param currentTurn 　現在のターン
      */
     public Result checkResult(Board board, Player player, int boardIndex, int currentTurn) {
-        if (isRowAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
-                isColumnAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
+        if (currentTurn > board.getSize() || currentTurn > MAX_TURN) {
+            return Result.DRAW;
+        }
+        if (isHorizontalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
+                isVerticalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM) ||
                 isDiagonalAligned(board, player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
             return Result.WIN;
-        }
-        if (currentTurn >= board.getSize() || currentTurn > MAX_TURN) {
-            return Result.DRAW;
         }
         return Result.CONTINUE;
     }
@@ -69,7 +69,7 @@ public class MatchStatus {
      * @param requiredAlignedNum 指定数
      * @return 判定する場所から左右に指定数並んだかどうか
      */
-    static boolean isRowAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
+    static boolean isHorizontalAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countRowAligned(board, playerID, boardIndex) + 1;
     }
 
@@ -83,7 +83,7 @@ public class MatchStatus {
      * @param requiredAlignedNum 指定数
      * @return 判定する場所から上下に指定数並んだかどうか
      */
-    static boolean isColumnAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
+    static boolean isVerticalAligned(Board board, int playerID, int boardIndex, int requiredAlignedNum) {
         return requiredAlignedNum == countColumnAligned(board, playerID, boardIndex) + 1;
     }
 

@@ -15,12 +15,23 @@ import static org.hamcrest.Matchers.greaterThan;
  */
 public class EasyCPUTest {
     @Test
-    public void 範囲内数字の確認テスト() throws InvalidBoardSizeException {
+    public void 範囲内数字の確認テストSquaredBoard() throws InvalidBoardSizeException {
         Player player = new EasyCPU(1);
         Board board = new SquaredBoard(3);
         int i = 0;
         while (i < 100) {
             assertThat(player.selectBoardIndex(board), is(both(greaterThan(-1)).and(lessThan(9))));
+            i++;
+        }
+    }
+
+    @Test
+    public void 範囲内数字の確認テスト() throws InvalidBoardSizeException {
+        Player player = new EasyCPU(1);
+        Board board = new TestBoard(3,4);
+        int i = 0;
+        while (i < 100) {
+            assertThat(player.selectBoardIndex(board), is(both(greaterThan(-1)).and(lessThan(12))));
             i++;
         }
     }

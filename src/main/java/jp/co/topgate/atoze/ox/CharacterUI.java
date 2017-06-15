@@ -45,7 +45,6 @@ public class CharacterUI implements UI {
         sb.append(emptyGridIndicatorToString(board));
 
         System.out.println(sb.toString());
-
     }
 
     @Override
@@ -118,8 +117,8 @@ public class CharacterUI implements UI {
 
         System.out.println("現在埋まっていないマスです.");
 
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
                 int currentIndex = j + (i * row);
                 sb.append("[");
 
