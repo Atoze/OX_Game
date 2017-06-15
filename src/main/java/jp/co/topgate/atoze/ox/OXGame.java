@@ -3,6 +3,7 @@ package jp.co.topgate.atoze.ox;
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsException;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class OXGame {
 
     private final MatchStatus match;
 
-    OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException {
+    OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
 
         this.ui = ui;
@@ -36,10 +37,10 @@ public class OXGame {
                 throw new InvalidPlayerIdException();
             }
         }
-        match = new MatchStatus(requiredAlignedNum, maxTurn);
+        match = new MatchStatus(board, requiredAlignedNum, maxTurn);
     }
 
-    OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException {
+    OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this(board, players, requiredAlignedNum, ui, board.getSize());
     }
 

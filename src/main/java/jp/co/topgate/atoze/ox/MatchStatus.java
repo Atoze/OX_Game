@@ -1,5 +1,7 @@
 package jp.co.topgate.atoze.ox;
 
+import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsException;
+
 /**
  * 勝利判定を行うクラス
  */
@@ -8,7 +10,13 @@ public class MatchStatus {
     private final int REQUIRED_ALIGNED_NUM;
     private final int MAX_TURN;
 
-    public MatchStatus(int requiredAlignedNum, int maxTurn) {
+    public MatchStatus(Board board, int requiredAlignedNum, int maxTurn) throws RequiredNumberAlignedOutOfBoundsException {
+        if(requiredAlignedNum<=0){
+            throw new RequiredNumberAlignedOutOfBoundsException("一列に並べられる数ではありません");
+        }
+        if(board.getMaxSideLength()<requiredAlignedNum){
+            throw new RequiredNumberAlignedOutOfBoundsException("勝利条件に用いられる一列に必要な数が、ボード上に並べる数を超えています");
+        }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
         this.MAX_TURN = maxTurn;
     }

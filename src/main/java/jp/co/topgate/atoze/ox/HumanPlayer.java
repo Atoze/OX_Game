@@ -9,7 +9,7 @@ public class HumanPlayer implements Player {
 
     HumanPlayer(int id) {
         this.id = id;
-        this.name = name + id + "さん";
+        this.name += "さん";
     }
 
     HumanPlayer(int id, String name) {

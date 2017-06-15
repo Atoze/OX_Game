@@ -2,12 +2,13 @@ package jp.co.topgate.atoze.ox.basic;
 
 import jp.co.topgate.atoze.ox.BoardImpl;
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
 import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 
 /**
  * 正方形のボードでプレイする際に使用するBoard
  */
-public class SquaredBoard extends BoardImpl{
+public class SquaredBoard extends BoardImpl {
 
     /**
      * ボードの初期値.
@@ -36,7 +37,11 @@ public class SquaredBoard extends BoardImpl{
      */
     private static final int DIMENSION = 2;
 
-    public SquaredBoard(int sideLength) {
+    public SquaredBoard(int sideLength) throws InvalidBoardSizeException {
+        if (sideLength <= 0|| sideLength>100) {
+            throw new InvalidBoardSizeException();
+        }
+
         this.sideLength = sideLength;
         this.size = (int) Math.pow(sideLength, 2);
         this.board = new int[this.size];
