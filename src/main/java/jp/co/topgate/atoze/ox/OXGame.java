@@ -47,8 +47,8 @@ public class OXGame {
     public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         int currentTurn = 0;
         while (true) {
-            currentTurn++;
             Player currentPlayer = players.get(currentTurn % players.size());
+            currentTurn++;
             ui.printStartTurn(currentPlayer, players, board);
 
             int boardIndex;
