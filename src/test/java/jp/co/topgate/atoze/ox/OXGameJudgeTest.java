@@ -49,7 +49,6 @@ public class OXGameJudgeTest {
         assertThat(true, is(judge.isWin(board, player, 2)));
     }
 
-    /*
     @Test
     public void 勝利がターンギリギリテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         Board board = new TestBoard(3, 3);
@@ -60,8 +59,6 @@ public class OXGameJudgeTest {
         board.insert(player.getID(), 1);
         assertThat(true, is(judge.isWin(board, player, 2)));
     }
-    */
-
 
     @Test(expected = RequiredNumberAlignedOutOfBoundsException.class)
     public void 達成できない勝利条件エラー() throws RequiredNumberAlignedOutOfBoundsException {
