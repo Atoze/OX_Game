@@ -60,7 +60,7 @@ public class SquaredBoardTest {
         board.insert(2, 3);
         assertThat(true, is(board.isHorizontalAligned(2, 5, 3)));
 
-        board.insert(2,  7);
+        board.insert(2, 7);
         board.insert(1, 8);
         assertThat(false, is(board.isHorizontalAligned(2, 6, 3)));
     }
