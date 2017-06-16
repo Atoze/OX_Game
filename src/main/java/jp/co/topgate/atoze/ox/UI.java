@@ -6,6 +6,8 @@ import java.util.List;
  * インターフェース実装クラス
  */
 public interface UI {
+    int O = 1;
+    int X = 2;
 
     /**
      * 値が挿入された時に表示される内容です.
@@ -24,11 +26,11 @@ public interface UI {
     /**
      * ターンの始めに表示される内容です.
      *
-     * @param currentPlayer これから実行するプレイヤー
-     * @param players       参加している全てのプレイヤーリスト
-     * @param board         ボードクラス
+     * @param player  これから実行するプレイヤー
+     * @param players 参加している全てのプレイヤーリスト
+     * @param board   ボードクラス
      */
-    void printStartTurn(Player currentPlayer, List<Player> players, Board board);
+    void printStartTurn(Player player, List<Player> players, Board board);
 
     /**
      * 1ターンが終了した際のゲームの状態を表示します.

@@ -1,4 +1,4 @@
-package jp.co.topgate.atoze.ox.basic;
+package jp.co.topgate.atoze.ox.board;
 
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;

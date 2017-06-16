@@ -1,4 +1,8 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.player;
+
+import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.OXGame;
+import jp.co.topgate.atoze.ox.Player;
 
 /**
  * 空いてるところをランダムに指定してくるCPUです.
@@ -6,20 +10,13 @@ package jp.co.topgate.atoze.ox;
 public class EasyCPU implements Player {
     private final int id;
 
-    EasyCPU(int id) {
+    public EasyCPU(int id) {
         this.id = id;
     }
 
     @Override
-    public int selectBoardIndex(Board board) {
-        /*
-        try {
-            board.insert(1,4);
-        } catch (BoardIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        } catch (InvalidPlayerIdException e) {
-            e.printStackTrace();
-        }*/
+    public int selectBoardIndex(OXGame game) {
+        Board board = game.getBoard();
         return (int) (Math.random() * board.getSize());
     }
 
