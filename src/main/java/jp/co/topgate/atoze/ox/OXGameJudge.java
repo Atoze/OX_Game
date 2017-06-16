@@ -43,7 +43,6 @@ public class OXGameJudge {
      * @param currentTurn 　現在のターン
      */
     public Result checkResult(Board board, Player player, int boardIndex, int currentTurn) {
-        Result result;
         if (board.isAligned(player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
             return Result.WIN;
         }
