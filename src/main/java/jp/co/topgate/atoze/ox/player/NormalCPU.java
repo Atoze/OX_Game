@@ -1,4 +1,4 @@
-package jp.co.topgate.atoze.ox.basic;
+package jp.co.topgate.atoze.ox.player;
 
 import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.Player;
@@ -10,13 +10,15 @@ import jp.co.topgate.atoze.ox.Player;
 public class NormalCPU implements Player {
     private final int id;
 
-    NormalCPU(int id) {
+    public NormalCPU(int id) {
         this.id = id;
     }
 
     @Override
     public int selectBoardIndex(Board board) {
         int boardIndex;
+
+        int winNumber;
 
         int shortSide = board.getColumn();
         int longSide = board.getRow();

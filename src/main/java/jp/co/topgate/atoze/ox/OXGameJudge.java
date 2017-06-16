@@ -3,12 +3,13 @@ package jp.co.topgate.atoze.ox;
 import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsException;
 
 /**
- * 勝利判定を行うクラス
+ * 勝利判定条件を担うクラス
  */
 public class OXGameJudge {
 
-    private final int REQUIRED_ALIGNED_NUM;
-    private final int MAX_TURN;
+    final int REQUIRED_ALIGNED_NUM;
+    final int MAX_TURN;
+    final int BOARD_MAX_TURN;
 
     public OXGameJudge(Board board, int requiredAlignedNum, int maxTurn) throws RequiredNumberAlignedOutOfBoundsException {
         if (requiredAlignedNum <= 0) {
@@ -22,6 +23,19 @@ public class OXGameJudge {
         }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
         this.MAX_TURN = maxTurn;
+        this.BOARD_MAX_TURN = board.getSize();
+    }
+
+    public boolean isWin(Board board, Player player, int boardIndex) {
+        return board.isAligned(player.getID(), boardIndex, REQUIRED_ALIGNED_NUM);
+    }
+
+    public boolean isLose() {
+        return false;
+    }
+
+    public boolean isDraw(int currentTurn) {
+        return (currentTurn >= BOARD_MAX_TURN || currentTurn >= MAX_TURN);
     }
 
     /**
@@ -42,6 +56,7 @@ public class OXGameJudge {
      * @param boardIndex  判定するボードの番号
      * @param currentTurn 　現在のターン
      */
+    /*
     public Result checkResult(Board board, Player player, int boardIndex, int currentTurn) {
         if (board.isAligned(player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
             return Result.WIN;
@@ -50,5 +65,11 @@ public class OXGameJudge {
             return Result.DRAW;
         }
         return Result.CONTINUE;
+    }*/
+    public boolean accept(Board board, int selectedGridIndex) {
+        if (selectedGridIndex < 0 || selectedGridIndex >= board.getSize()) {
+            return false;
+        }
+        return !board.isFilled(selectedGridIndex);
     }
 }

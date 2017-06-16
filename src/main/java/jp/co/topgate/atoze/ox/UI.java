@@ -6,6 +6,8 @@ import java.util.List;
  * インターフェース実装クラス
  */
 public interface UI {
+    int O = 1;
+    int X = 2;
 
     /**
      * 値が挿入された時に表示される内容です.

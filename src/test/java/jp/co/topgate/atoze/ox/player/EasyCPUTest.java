@@ -1,6 +1,9 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.player;
 
-import jp.co.topgate.atoze.ox.basic.SquaredBoard;
+import jp.co.topgate.atoze.ox.Player;
+import jp.co.topgate.atoze.ox.board.TestBoard;
+import jp.co.topgate.atoze.ox.board.SquaredBoard;
+import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
 import org.junit.Test;
 
@@ -28,7 +31,7 @@ public class EasyCPUTest {
     @Test
     public void 範囲内数字の確認テスト() throws InvalidBoardSizeException {
         Player player = new EasyCPU(1);
-        Board board = new TestBoard(3,4);
+        Board board = new TestBoard(3, 4);
         int i = 0;
         while (i < 100) {
             assertThat(player.selectBoardIndex(board), is(both(greaterThan(-1)).and(lessThan(12))));

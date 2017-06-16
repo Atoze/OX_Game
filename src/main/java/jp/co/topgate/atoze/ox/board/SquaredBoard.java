@@ -1,56 +1,94 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.board;
 
+import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.exception.BoardIndexOutOfBoundsException;
+import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
 import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
- * Created by atoze on 2017/06/15.
+ * 正方形のボードでプレイする際に使用するBoard
  */
-public class TestBoard extends BoardImpl {
+public class SquaredBoard extends Board {
+
+    /**
+     * ボードの初期値.
+     * この値に一致するプレイヤーIDは、InvalidPlayerIdExceptionを返されます.
+     */
     private final static int DEFAULT_VALUE = -1;
 
-    private final int column;
+    /**
+     * ボードの一辺の長さです.
+     */
+    private final int sideLength;
 
-    private final int row;
-
+    /**
+     * ボードが保持する配列の長さです.
+     */
     private final int size;
 
-    List<Integer> board;
+    /**
+     * int型の配列にプレイヤー識別値を保管します.
+     * 初期値は、DEFAULT_VALUEで指定された値です.
+     */
+    private int[] board;
 
-    TestBoard(int row, int column) {
-        this.column = column;
-        this.row = row;
-        this.size = column * row;
-        this.board = new ArrayList<>(Collections.nCopies(size, DEFAULT_VALUE));
+    public SquaredBoard(int sideLength) throws InvalidBoardSizeException {
+        if (sideLength <= 0 || sideLength > 100) {
+            throw new InvalidBoardSizeException();
+        }
+
+        this.sideLength = sideLength;
+        this.size = (int) Math.pow(sideLength, 2);
+        this.board = new int[this.size];
+
+        for (int i = 0; i < this.board.length; i++) {
+            board[i] = DEFAULT_VALUE;
+        }
+    }
+
+    protected void insert(int playerId, int column, int row) throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
+        if (column <= 0 || row <= 0 || column > sideLength || row > sideLength) {
+            throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
+        }
+
+        int boardIndex = (column - 1) + ((row - 1) * sideLength);
+        insert(playerId, boardIndex);
+    }
+
+    @Override
+    protected void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
+        if (playerId == DEFAULT_VALUE) {
+            throw new InvalidPlayerIdException("許可されていないプレイヤーIDです");
+        }
+        if (playerId <= DEFAULT_VALUE || 0 > boardIndex || boardIndex >= (size)) {
+            throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
+        }
+        board[boardIndex] = playerId;
     }
 
     @Override
     public boolean isFilled(int boardIndex) {
-        return !(board.get(boardIndex) == DEFAULT_VALUE);
+        return !(board[boardIndex] == DEFAULT_VALUE);
     }
 
     @Override
     public int getRow() {
-        return row;
+        return sideLength;
     }
 
     @Override
     public int getColumn() {
-        return column;
+        return sideLength;
     }
 
     @Override
     public int getMaxSideLength() {
-        return Math.max(row, column);
+        return sideLength;
     }
 
     @Override
     public int getMinSideLength() {
-        return Math.min(row, column);
+        return sideLength;
     }
 
     @Override
@@ -60,23 +98,12 @@ public class TestBoard extends BoardImpl {
 
     @Override
     public int getPlayerId(int boardIndex) {
-        return board.get(boardIndex);
+        return board[boardIndex];
     }
 
     @Override
     public int getDefaultValue() {
         return DEFAULT_VALUE;
-    }
-
-    @Override
-    public void insert(int playerId, int boardIndex) throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
-        if (playerId == DEFAULT_VALUE) {
-            throw new InvalidPlayerIdException("許可されていないプレイヤーIDです");
-        }
-        if (playerId <= DEFAULT_VALUE || 0 > boardIndex || boardIndex >= size) {
-            throw new BoardIndexOutOfBoundsException("ボードの範囲外です");
-        }
-        board.set(boardIndex, playerId);
     }
 
     @Override
@@ -134,6 +161,7 @@ public class TestBoard extends BoardImpl {
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
     public int countRowAligned(int playerID, int boardIndex) {
+        int row = sideLength;
         int lengthFromSide = boardIndex % row;
 
         int rightCount = 0;
@@ -169,6 +197,8 @@ public class TestBoard extends BoardImpl {
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
     public int countColumnAligned(int playerID, int boardIndex) {
+        int column = sideLength;
+        int row = sideLength;
         int lengthFromTop = (boardIndex / row) % column;
 
         int downCount = 0;
@@ -205,6 +235,9 @@ public class TestBoard extends BoardImpl {
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
     public int countLeftTiltAligned(int playerID, int boardIndex) {
+        int column = sideLength;
+        int row = sideLength;
+
         int lengthFromSide = boardIndex % row;
         int lengthFromTop = (boardIndex / row) % column;
 
@@ -246,6 +279,9 @@ public class TestBoard extends BoardImpl {
      * @return 並んだ数　なお、返す値に自分は含まれません
      */
     public int countRightTiltAligned(int playerID, int boardIndex) {
+        int column = sideLength;
+        int row = sideLength;
+
         int lengthFromSide = boardIndex % row;
         int lengthFromTop = (boardIndex / row) % column;
 

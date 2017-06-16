@@ -1,5 +1,6 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.ui;
 
+import jp.co.topgate.atoze.ox.UI;
 import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
 import org.junit.Test;
 

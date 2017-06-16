@@ -1,4 +1,8 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.player;
+
+import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.Player;
+import jp.co.topgate.atoze.ox.UI;
 
 /**
  * 外部から数字入力を受け付けることができるプレイヤーです.
@@ -8,11 +12,11 @@ public class HumanPlayer implements Player {
     private final int id;
     private final UI ui;
 
-    HumanPlayer(int id, UI ui) {
+    public HumanPlayer(int id, UI ui) {
         this(id, "プレイヤー", ui);
     }
 
-    HumanPlayer(int id, String name, UI ui) {
+    public HumanPlayer(int id, String name, UI ui) {
         this.id = id;
         this.name = name + "さん";
         this.ui = ui;

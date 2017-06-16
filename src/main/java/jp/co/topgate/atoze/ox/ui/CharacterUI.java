@@ -1,4 +1,9 @@
-package jp.co.topgate.atoze.ox;
+package jp.co.topgate.atoze.ox.ui;
+
+import jp.co.topgate.atoze.ox.Result;
+import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.Player;
+import jp.co.topgate.atoze.ox.UI;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -137,9 +142,9 @@ public class CharacterUI implements UI {
 
     private static String playerIdToString(int playerId) {
         switch (playerId) {
-            case 1:
+            case O:
                 return " ○ ";
-            case 2:
+            case X:
                 return " × ";
             default:
                 return " P" + Integer.toString(playerId) + " ";

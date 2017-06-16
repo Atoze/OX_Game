@@ -1,7 +1,9 @@
 package jp.co.topgate.atoze.ox;
 
-import jp.co.topgate.atoze.ox.basic.SquaredBoard;
+import jp.co.topgate.atoze.ox.board.SquaredBoard;
 import jp.co.topgate.atoze.ox.exception.*;
+import jp.co.topgate.atoze.ox.player.EasyCPU;
+import jp.co.topgate.atoze.ox.ui.CharacterUI;
 import org.junit.Test;
 
 import java.util.ArrayList;
