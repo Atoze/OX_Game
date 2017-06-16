@@ -1,6 +1,7 @@
 package jp.co.topgate.atoze.ox.player;
 
 import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.OXGame;
 import jp.co.topgate.atoze.ox.Player;
 
 /**
@@ -15,7 +16,8 @@ public class NormalCPU implements Player {
     }
 
     @Override
-    public int selectBoardIndex(Board board) {
+    public int selectBoardIndex(OXGame game) {
+        Board board = game.getBoard();
         int boardIndex;
 
         int winNumber;

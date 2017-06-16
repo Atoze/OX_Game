@@ -1,6 +1,6 @@
 package jp.co.topgate.atoze.ox.player;
 
-import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.OXGame;
 import jp.co.topgate.atoze.ox.Player;
 import jp.co.topgate.atoze.ox.UI;
 
@@ -23,7 +23,7 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int selectBoardIndex(Board board) {
+    public int selectBoardIndex(OXGame game) {
         return ui.selectBoardIndex();
     }
 

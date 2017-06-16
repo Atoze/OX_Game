@@ -1,6 +1,6 @@
 package jp.co.topgate.atoze.ox;
 
-import jp.co.topgate.atoze.ox.board.SquaredBoard;
+import jp.co.topgate.atoze.ox.board.TestBoard;
 import jp.co.topgate.atoze.ox.exception.*;
 import jp.co.topgate.atoze.ox.player.EasyCPU;
 import jp.co.topgate.atoze.ox.ui.CharacterUI;
@@ -18,7 +18,7 @@ public class OXGameTest {
         List<Player> players = new ArrayList<>();
         players.add(new EasyCPU(-1));
         players.add(new EasyCPU(2));
-        OXGame game = new OXGame(new SquaredBoard(3), players, 3, new CharacterUI());
+        OXGame game = new OXGame(new TestBoard(3, 3), players, 3, new CharacterUI());
         game.start();
     }
 
@@ -26,7 +26,16 @@ public class OXGameTest {
     public void プレイヤー人数が足りてないテスト() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException, PlayersOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
         List<Player> players = new ArrayList<>();
         players.add(new EasyCPU(1));
-        OXGame game = new OXGame(new SquaredBoard(3), players, 3, new CharacterUI());
+        OXGame game = new OXGame(new TestBoard(3, 3), players, 3, new CharacterUI());
         game.start();
+    }
+
+    @Test(expected = RequiredNumberAlignedOutOfBoundsException.class)
+    public void 達成できない勝利条件エラー() throws RequiredNumberAlignedOutOfBoundsException, InvalidPlayerIdException, PlayersOutOfBoundsException {
+        //Board board = new TestBoard(3, 3);
+        List<Player> players = new ArrayList<>();
+        players.add(new EasyCPU(1));
+        players.add(new EasyCPU(2));
+        new OXGame(new TestBoard(3, 3), players, 5, new CharacterUI());
     }
 }

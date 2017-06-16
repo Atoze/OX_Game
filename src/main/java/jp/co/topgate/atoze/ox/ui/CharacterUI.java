@@ -1,9 +1,6 @@
 package jp.co.topgate.atoze.ox.ui;
 
-import jp.co.topgate.atoze.ox.Result;
-import jp.co.topgate.atoze.ox.Board;
-import jp.co.topgate.atoze.ox.Player;
-import jp.co.topgate.atoze.ox.UI;
+import jp.co.topgate.atoze.ox.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -43,10 +40,10 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public void printStartTurn(Player currentPlayer, List<Player> players, Board board) {
+    public void printStartTurn(Player player, List<Player> players, Board board) {
         StringBuilder sb = new StringBuilder();
-        sb.append(playerIdToString(currentPlayer.getID())).append("側 ");
-        sb.append(currentPlayer.getName()).append("のターンです").append(LINE_FEED);
+        sb.append(playerIdToString(player.getID())).append("側 ");
+        sb.append(player.getName()).append("のターンです").append(LINE_FEED);
         sb.append(emptyGridIndicatorToString(board));
 
         System.out.println(sb.toString());

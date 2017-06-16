@@ -1,6 +1,7 @@
 package jp.co.topgate.atoze.ox.player;
 
 import jp.co.topgate.atoze.ox.Board;
+import jp.co.topgate.atoze.ox.OXGame;
 import jp.co.topgate.atoze.ox.Player;
 
 /**
@@ -14,15 +15,8 @@ public class EasyCPU implements Player {
     }
 
     @Override
-    public int selectBoardIndex(Board board) {
-        /*
-        try {
-            board.insert(1,4);
-        } catch (BoardIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        } catch (InvalidPlayerIdException e) {
-            e.printStackTrace();
-        }*/
+    public int selectBoardIndex(OXGame game) {
+        Board board = game.getBoard();
         return (int) (Math.random() * board.getSize());
     }
 

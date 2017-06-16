@@ -18,10 +18,13 @@ public class OXGame {
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
 
-    final int REQUIRED_ALIGNED_NUM;
-    final int MAX_TURN;
+    private final int REQUIRED_ALIGNED_NUM;
+    private final int MAX_TURN;
 
-    OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
+    //private int currentTurn = 0;
+    //private Player currentPlayer;
+
+    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
 
         this.ui = ui;
@@ -52,11 +55,11 @@ public class OXGame {
         this.MAX_TURN = maxTurn;
     }
 
-    OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
+    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this(board, players, requiredAlignedNum, ui, board.getSize());
     }
 
-    public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
+    void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         int currentTurn = 0;
         while (true) {
             Player currentPlayer = players.get(currentTurn % players.size());
@@ -65,9 +68,7 @@ public class OXGame {
 
             int boardIndex;
             while (true) {
-                //TODO:もし設置に制限があったり、勝利条件をCPU側が参照したい際は、Ruleクラスにまとめるといいかもしれない
-                //TODO:勝利条件はn個一列に並ぶ、なのでその変数nの値さえ知れば後は共通した勝利条件なので把握したも同じである
-                boardIndex = currentPlayer.selectBoardIndex(board);
+                boardIndex = currentPlayer.selectBoardIndex(this);
                 if (accept(board, boardIndex)) {
                     break;
                 }
@@ -75,7 +76,7 @@ public class OXGame {
             board.insert(currentPlayer.getID(), boardIndex);
             ui.printInsert(currentPlayer, board, boardIndex);
 
-            Result result = checkResult(board, currentPlayer, boardIndex, currentTurn);
+            Result result = checkResult(currentPlayer, boardIndex, currentTurn);
             ui.printGameResult(currentPlayer, players, board, result);
             if (result != Result.CONTINUE) {
                 break;
@@ -103,18 +104,37 @@ public class OXGame {
      * 続行判定:
      * 上記二つどちらにも当てはまらない場合
      *
-     * @param board       ボードクラス
      * @param player      判定するプレイヤー
      * @param boardIndex  判定するボードの番号
      * @param currentTurn 　現在のターン
      */
-    public Result checkResult(Board board, Player player, int boardIndex, int currentTurn) {
-        if (board.isAligned(player.getID(), boardIndex, REQUIRED_ALIGNED_NUM)) {
+    private Result checkResult(Player player, int boardIndex, int currentTurn) {
+        if (isWin(player, boardIndex)) {
             return Result.WIN;
         }
-        if (currentTurn >= board.getSize() || currentTurn >= MAX_TURN) {
+        if (isDraw(currentTurn)) {
             return Result.DRAW;
         }
         return Result.CONTINUE;
+    }
+
+    public boolean isWin(Player player, int boardIndex) {
+        return board.isAligned(player.getID(), boardIndex, REQUIRED_ALIGNED_NUM);
+    }
+
+    public boolean isLose(Player player, int boardIndex) {
+        return false;
+    }
+
+    public boolean isDraw(int currentTurn) {
+        return (currentTurn >= board.getSize() || currentTurn >= MAX_TURN);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
