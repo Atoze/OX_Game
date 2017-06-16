@@ -18,7 +18,7 @@ public class OXGame {
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
 
-    private final OXGameJudge match;
+    private final OXGameJudge judge;
 
     OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
@@ -37,7 +37,7 @@ public class OXGame {
                 throw new InvalidPlayerIdException();
             }
         }
-        match = new OXGameJudge(board, requiredAlignedNum, maxTurn);
+        judge = new OXGameJudge(board, requiredAlignedNum, maxTurn);
     }
 
     OXGame(BoardImpl board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
@@ -47,8 +47,8 @@ public class OXGame {
     public void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         int currentTurn = 0;
         while (true) {
-            currentTurn++;
             Player currentPlayer = players.get(currentTurn % players.size());
+            currentTurn++;
             ui.printStartTurn(currentPlayer, players, board);
 
             int boardIndex;
@@ -63,7 +63,7 @@ public class OXGame {
             this.board.insert(currentPlayer.getID(), boardIndex);
             ui.printInsert(currentPlayer, board, boardIndex);
 
-            Result result = match.checkResult(board, currentPlayer, boardIndex, currentTurn);
+            Result result = judge.checkResult(board, currentPlayer, boardIndex, currentTurn);
             ui.printGameResult(currentPlayer, players, board, result);
             if (result != Result.CONTINUE) {
                 break;

@@ -15,14 +15,14 @@ public class OXGameJudgeTest {
     @Test
     public void コンティニューテスト() throws RequiredNumberAlignedOutOfBoundsException {
         BoardImpl board = new TestBoard(3, 3);
-        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
-        assertThat(Result.CONTINUE, is(match.checkResult(board, new EasyCPU(1),0,0)));
+        OXGameJudge judge = new OXGameJudge(board, 3, board.getSize());
+        assertThat(Result.CONTINUE, is(judge.checkResult(board, new EasyCPU(1),0,0)));
     }
 
     @Test
     public void ターン経過引き分けテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         BoardImpl board = new TestBoard(3, 3);
-        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
+        OXGameJudge judge = new OXGameJudge(board, 3, board.getSize());
         board.insert(1,0);
         board.insert(2,1);
         board.insert(3,2);
@@ -32,29 +32,29 @@ public class OXGameJudgeTest {
         board.insert(7,6);
         board.insert(8,7);
         board.insert(9,8);
-        assertThat(Result.DRAW, is(match.checkResult(board, new EasyCPU(1),0,10)));
+        assertThat(Result.DRAW, is(judge.checkResult(board, new EasyCPU(1),0,10)));
     }
 
     @Test
     public void 勝利したテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         BoardImpl board = new TestBoard(3, 3);
-        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
+        OXGameJudge judge = new OXGameJudge(board, 3, board.getSize());
         Player player = new EasyCPU(1);
 
         board.insert(player.getID(),0);
         board.insert(player.getID(),1);
-        assertThat(Result.WIN, is(match.checkResult(board, player,2,3)));
+        assertThat(Result.WIN, is(judge.checkResult(board, player,2,3)));
     }
 
     @Test
     public void 勝利がターンギリギリテスト() throws RequiredNumberAlignedOutOfBoundsException, BoardIndexOutOfBoundsException, InvalidPlayerIdException {
         BoardImpl board = new TestBoard(3, 3);
-        OXGameJudge match = new OXGameJudge(board, 3, board.getSize());
+        OXGameJudge judge = new OXGameJudge(board, 3, board.getSize());
         Player player = new EasyCPU(1);
 
         board.insert(player.getID(),0);
         board.insert(player.getID(),1);
-        assertThat(Result.WIN, is(match.checkResult(board, player,2, board.getSize())));
+        assertThat(Result.WIN, is(judge.checkResult(board, player,2, board.getSize())));
     }
 
     @Test(expected = RequiredNumberAlignedOutOfBoundsException.class)
