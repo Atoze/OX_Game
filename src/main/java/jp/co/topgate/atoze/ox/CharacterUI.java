@@ -24,14 +24,14 @@ public class CharacterUI implements UI {
     @Override
     public int selectBoardIndex() {
         int boardIndex;
-        System.out.println("数字を選択して入力してエンターを押してください");
+        System.out.println("数字を入力してエンターを押してください");
         while (true) {
             Scanner sc = new Scanner(System.in);
             try {
                 boardIndex = sc.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("数字を選択して入力してエンターを押してください");
+                System.out.println("数字を入力してエンターを押してください");
             }
         }
         return boardIndex;
