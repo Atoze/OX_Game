@@ -24,14 +24,14 @@ public class CharacterUI implements UI {
     @Override
     public int selectBoardIndex() {
         int boardIndex;
-        System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
+        System.out.println("数字を入力してエンターを押してください");
         while (true) {
             Scanner sc = new Scanner(System.in);
             try {
                 boardIndex = sc.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("埋まってないマスの中から数字を選択して入力してエンターを押してください");
+                System.out.println("数字を入力してエンターを押してください");
             }
         }
         return boardIndex;
@@ -52,11 +52,7 @@ public class CharacterUI implements UI {
         StringBuilder sb = new StringBuilder();
         switch (result) {
             case CONTINUE:
-                sb.append("現在のボードの状況です.").append(LINE_FEED);
-                sb.append(boardToString(board));
-
-                System.out.println(sb.toString());
-                return;
+                break;
             case WIN:
                 sb.append("勝負あり！").append(LINE_FEED).append("最終的なボードの状況です.").append(LINE_FEED);
                 sb.append(boardToString(board)).append(LINE_FEED);
@@ -115,24 +111,24 @@ public class CharacterUI implements UI {
         int maxNumString = String.valueOf(board.getSize()).length();
         StringBuilder sb = new StringBuilder();
 
-        System.out.println("現在埋まっていないマスです.");
-
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
                 int currentIndex = j + (i * row);
                 sb.append("[");
 
                 if (board.isFilled(currentIndex)) {
-                    for (int x = 0; x <= maxNumString; x++) {
+                    String filledChar = playerIdToString(board.getPlayerId(currentIndex));
+                    sb.append(filledChar);
+                    for (int x = filledChar.length() - 2; x < maxNumString; x++) {
                         sb.append(" ");
                     }
                 } else {
                     sb.append(" ").append(currentIndex);
-                    for (int x = String.valueOf(currentIndex).length(); x < maxNumString; x++) {
+                    for (int x = String.valueOf(currentIndex).length(); x <= maxNumString; x++) {
                         sb.append(" ");
                     }
                 }
-                sb.append(" ]");
+                sb.append("]");
             }
             sb.append(LINE_FEED);
         }
