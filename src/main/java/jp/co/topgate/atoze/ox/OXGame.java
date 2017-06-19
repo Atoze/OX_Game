@@ -21,10 +21,12 @@ public class OXGame {
     private final int REQUIRED_ALIGNED_NUM;
     private final int MAX_TURN;
 
+    private final int TIME_LIMIT;
+
     //private int currentTurn = 0;
     //private Player currentPlayer;
 
-    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
+    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
 
         this.ui = ui;
@@ -53,10 +55,11 @@ public class OXGame {
         }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
         this.MAX_TURN = maxTurn;
+        this.TIME_LIMIT = timeLimit;
     }
 
-    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
-        this(board, players, requiredAlignedNum, ui, board.getSize());
+    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
+        this(board, players, requiredAlignedNum, ui, board.getSize(), timeLimit);
     }
 
     void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
@@ -70,14 +73,15 @@ public class OXGame {
             if (currentTurn == 1) {
                 boardIndex = getCenterIndex(board);
             } else {
-                Timer timer = new Timer(10, ui);
+                Timer timer = new Timer(TIME_LIMIT, 5, ui);
                 timer.start();
                 while (timer.getTime() > 0) {
-                    boardIndex = currentPlayer.selectBoardIndex(this, timer.getTime());
+                    boardIndex = currentPlayer.selectBoardIndex(this, timer);
                     if (accept(board, boardIndex)) {
                         break;
                     }
                 }
+                timer.shutdown();
                 if (boardIndex == board.getDefaultValue()) {
                     boardIndex = (int) (Math.random() * board.getSize());
                 }

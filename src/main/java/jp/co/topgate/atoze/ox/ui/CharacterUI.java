@@ -24,15 +24,13 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public int selectBoardIndex(OXGame game, int timeLeft) {
+    public int selectBoardIndex(Board board, Timer timer) {
         System.out.println("数字を入力してエンターを押してください");
-        return select(game, timeLeft);
+        return select(board, timer);
     }
 
-    private int select(OXGame game, int timeLeft) {
+    private int select(Board board, Timer timer) {
         BufferedInputStream in = new BufferedInputStream(System.in);
-        Timer timer = new Timer(timeLeft, this);
-        timer.start();
         int input = 0;
         StringBuilder sb = new StringBuilder();
         while (timer.getTime() > 0) {
@@ -43,25 +41,16 @@ public class CharacterUI implements UI {
                         break;
                     }
                     sb.append((char) input);
-                    timer.stop();
+                    timer.shutdown();
                 }
             } catch (IOException e) {
-                return randomSelect(game);
+                return board.getDefaultValue();
             }
         }
         if (sb.toString().isEmpty()) {
-            return randomSelect(game);
+            return board.getDefaultValue();
         }
         return Integer.parseInt(sb.toString());
-    }
-
-    private int randomSelect(OXGame game) {
-        Board board = game.getBoard();
-        int boardIndex = board.getDefaultValue();
-        while (!game.accept(board, boardIndex)) {
-            boardIndex = (int) (Math.random() * game.getBoard().getSize());
-        }
-        return boardIndex;
     }
 
     @Override
@@ -109,7 +98,11 @@ public class CharacterUI implements UI {
                 //TODO: ここにたどり着くのはエラー
                 return;
         }
+    }
 
+    @Override
+    public void printTimeLeft(int timeLeft) {
+        System.out.println("残り時間" + timeLeft + "秒");
     }
 
     private String boardToString(Board board) {

@@ -20,10 +20,11 @@ public interface UI {
 
     /**
      * 外部から挿入したい数を受け付ける際のインターフェースを決定します.
-     * @param game
-     * @param timeLeft
+     *
+     * @param board
+     * @param timer
      */
-    int selectBoardIndex(OXGame game, int timeLeft);
+    int selectBoardIndex(Board board, Timer timer);
 
     /**
      * ターンの始めに表示される内容です.
@@ -43,4 +44,11 @@ public interface UI {
      * @param result        このターンの結果
      */
     void printGameResult(Player currentPlayer, List<Player> player, Board board, Result result);
+
+    /**
+     * 残り時間を出力します.
+     *
+     * @param timeLeft 残り時間
+     */
+    void printTimeLeft(int timeLeft);
 }

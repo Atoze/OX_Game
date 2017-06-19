@@ -33,7 +33,7 @@ public class Main {
      */
     private static void playSquaredBoard(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
         Board board = new SquaredBoard(gridSize);
-        OXGame game = new OXGame(board, players, gridSize, ui);
+        OXGame game = new OXGame(board, players, gridSize, ui, -1);
         game.start();
     }
 
@@ -43,7 +43,7 @@ public class Main {
      */
     private static void playGomoku(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
         Board board = new SquaredBoard(gridSize);
-        OXGame game = new OXGame(board, players, 5, ui);
+        OXGame game = new OXGame(board, players, 5, ui, 10);
         game.start();
     }
 }
