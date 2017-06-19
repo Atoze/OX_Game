@@ -15,7 +15,7 @@ public class EasyCPU implements Player {
     }
 
     @Override
-    public int selectBoardIndex(OXGame game) {
+    public int selectBoardIndex(OXGame game, int timeLeft) {
         Board board = game.getBoard();
         return (int) (Math.random() * board.getSize());
     }

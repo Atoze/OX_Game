@@ -9,8 +9,9 @@ public interface Player {
      * 挿入する値を決めて、その値を返します
      *
      * @param game ゲームクラス
+     * @param timeLeft
      */
-    int selectBoardIndex(OXGame game);
+    int selectBoardIndex(OXGame game, int timeLeft);
 
     /**
      * プレイヤーの名前を取得します.

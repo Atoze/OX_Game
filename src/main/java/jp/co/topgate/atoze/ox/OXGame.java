@@ -66,11 +66,20 @@ public class OXGame {
             currentTurn++;
             ui.printStartTurn(currentPlayer, players, board);
 
-            int boardIndex;
-            while (true) {
-                boardIndex = currentPlayer.selectBoardIndex(this);
-                if (accept(board, boardIndex)) {
-                    break;
+            int boardIndex = board.getDefaultValue();
+            if (currentTurn == 1) {
+                boardIndex = getCenterIndex(board);
+            } else {
+                Timer timer = new Timer(10, ui);
+                timer.start();
+                while (timer.getTime() > 0) {
+                    boardIndex = currentPlayer.selectBoardIndex(this, timer.getTime());
+                    if (accept(board, boardIndex)) {
+                        break;
+                    }
+                }
+                if (boardIndex == board.getDefaultValue()) {
+                    boardIndex = (int) (Math.random() * board.getSize());
                 }
             }
             board.insert(currentPlayer.getID(), boardIndex);
@@ -82,6 +91,15 @@ public class OXGame {
                 break;
             }
         }
+    }
+
+    private int getCenterIndex(Board board) {
+        board.getSize();
+        int rowMid = board.getRow() / 2;
+        int colMid = board.getColumn() / 2;
+        int mid = (board.getRow() * colMid) + rowMid;
+        System.out.println(mid);
+        return mid;
     }
 
     public boolean accept(Board board, int selectedGridIndex) {

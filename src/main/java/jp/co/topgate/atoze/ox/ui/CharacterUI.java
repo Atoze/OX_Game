@@ -2,9 +2,9 @@ package jp.co.topgate.atoze.ox.ui;
 
 import jp.co.topgate.atoze.ox.*;
 
-import java.util.InputMismatchException;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * ターミナルにゲームの状況などのUIを出力するクラスです
@@ -24,17 +24,42 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public int selectBoardIndex() {
-        int boardIndex;
+    public int selectBoardIndex(OXGame game, int timeLeft) {
         System.out.println("数字を入力してエンターを押してください");
-        while (true) {
-            Scanner sc = new Scanner(System.in);
+        return select(game, timeLeft);
+    }
+
+    private int select(OXGame game, int timeLeft) {
+        BufferedInputStream in = new BufferedInputStream(System.in);
+        Timer timer = new Timer(timeLeft, this);
+        timer.start();
+        int input = 0;
+        StringBuilder sb = new StringBuilder();
+        while (timer.getTime() > 0) {
             try {
-                boardIndex = sc.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("数字を入力してエンターを押してください");
+                if (0 < (in.available())) {
+                    input = in.read();
+                    if (input == 10 || input == 0) {
+                        break;
+                    }
+                    sb.append((char) input);
+                    timer.stop();
+                }
+            } catch (IOException e) {
+                return randomSelect(game);
             }
+        }
+        if (sb.toString().isEmpty()) {
+            return randomSelect(game);
+        }
+        return Integer.parseInt(sb.toString());
+    }
+
+    private int randomSelect(OXGame game) {
+        Board board = game.getBoard();
+        int boardIndex = board.getDefaultValue();
+        while (!game.accept(board, boardIndex)) {
+            boardIndex = (int) (Math.random() * game.getBoard().getSize());
         }
         return boardIndex;
     }
@@ -140,9 +165,9 @@ public class CharacterUI implements UI {
     private static String playerIdToString(int playerId) {
         switch (playerId) {
             case O:
-                return " ○ ";
+                return " ● ";
             case X:
-                return " × ";
+                return " ○ ";
             default:
                 return " P" + Integer.toString(playerId) + " ";
         }

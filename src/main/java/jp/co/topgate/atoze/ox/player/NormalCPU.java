@@ -11,34 +11,61 @@ import jp.co.topgate.atoze.ox.Player;
 public class NormalCPU implements Player {
     private final int id;
 
+    private final static int DEFAULT_SCORE = -1;
+
     public NormalCPU(int id) {
         this.id = id;
     }
 
     @Override
-    public int selectBoardIndex(OXGame game) {
+    public int selectBoardIndex(OXGame game, int timeLeft) {
+
         Board board = game.getBoard();
-        int boardIndex;
+        int boardIndex = board.getDefaultValue();
+/*
+        //あくまで勝利条件は変わらないことを前提とする
+        int winNumber = game.REQUIRED_ALIGNED_NUM;
 
-        int winNumber;
+        for (int winNum = 0; winNum < winNumber; winNum++) {
 
-        int shortSide = board.getColumn();
-        int longSide = board.getRow();
+            int score = 0;
 
-        if (shortSide >= longSide) {
-            int temp = longSide;
-            longSide = shortSide;
-            shortSide = temp;
-            /*
-            shortSide ^= longSide;
-            longSide ^= shortSide;
-            shortSide ^= longSide;*/
-        }
-        int surplusSide = board.getSize() / (longSide * shortSide);
-        while (true) {
+            for (int id = 0; id < game.players.size(); id++) {
+                for (int index = 0; index < board.getSize(); index++) {
+                    if (board.isAligned(id, index, winNum)) {
+                        if (game.accept(board, index)) {
+                            if (score < winNum) {
+                                score = winNum;
+                                boardIndex = index;
+                            }
+                        }
+                    }
+                }
+            }
+/*
+            //自分の勝利条件を探す
+            for (int index = 0; index < board.getSize(); index++) {
+                if (board.isAligned(this.id, index, winNum)) {
+                    if (game.accept(board, index)) {
+                        if (score < winNum) {
+                            score = winNum;
+                            boardIndex = index;
+                        }
+                    }
+
+                }
+            }
+            */
+
+
+        //if(game.isLose(this, boardIndex)){}
+
+
+        /*
+        if (boardIndex == board.getDefaultValue()) {
             boardIndex = (int) (Math.random() * board.getSize());
-            break;
-        }
+        }*/
+        boardIndex = (int) (Math.random() * board.getSize());
         return boardIndex;
     }
 
@@ -49,6 +76,6 @@ public class NormalCPU implements Player {
 
     @Override
     public String getName() {
-        return "コンピューター";
+        return "ちょっと強いコンピューター";
     }
 }

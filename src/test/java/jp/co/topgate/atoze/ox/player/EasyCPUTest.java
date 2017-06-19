@@ -44,7 +44,7 @@ public class EasyCPUTest {
 
         int i = 0;
         while (i < 100) {
-            assertThat(player.selectBoardIndex(game), is(both(greaterThan(-1)).and(lessThan(9))));
+            assertThat(player.selectBoardIndex(game, ), is(both(greaterThan(-1)).and(lessThan(9))));
             i++;
         }
     }
@@ -55,7 +55,7 @@ public class EasyCPUTest {
         Board board = new TestBoard(3, 4);
         int i = 0;
         while (i < 100) {
-            assertThat(player.selectBoardIndex(game), is(both(greaterThan(-1)).and(lessThan(12))));
+            assertThat(player.selectBoardIndex(game, ), is(both(greaterThan(-1)).and(lessThan(12))));
             i++;
         }
     }

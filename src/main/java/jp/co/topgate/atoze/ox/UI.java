@@ -20,8 +20,10 @@ public interface UI {
 
     /**
      * 外部から挿入したい数を受け付ける際のインターフェースを決定します.
+     * @param game
+     * @param timeLeft
      */
-    int selectBoardIndex();
+    int selectBoardIndex(OXGame game, int timeLeft);
 
     /**
      * ターンの始めに表示される内容です.
