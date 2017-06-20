@@ -123,12 +123,12 @@ public class CharacterUI implements UI {
         }
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < board.getColumn(); i++) {
+        for (int i = 0; i < board.getColumnValueLength(); i++) {
             sb.append(LINE_FEED);
             sb.append(gridRow(board, i, maxNumString, "·"));
             sb.append(LINE_FEED);
-            for (int j = 0; j < board.getRow(); j++) {
-                if (i < board.getColumn() - 1) {
+            for (int j = 0; j < board.getRowValueLength(); j++) {
+                if (i < board.getColumnValueLength() - 1) {
                     sb.append(charWithSpace("|", maxNumString));
                     sb.append(" ");
                 }
@@ -144,12 +144,12 @@ public class CharacterUI implements UI {
         }
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < board.getColumn(); i++) {
+        for (int i = 0; i < board.getColumnValueLength(); i++) {
             sb.append(LINE_FEED);
-            sb.append(gridRowWithBoardIndex(board, i, maxNumString));
+            sb.append(gridRow(board, i, maxNumString, null));
             sb.append(LINE_FEED);
-            for (int j = 0; j < board.getRow(); j++) {
-                if (i < board.getColumn() - 1) {
+            for (int j = 0; j < board.getRowValueLength(); j++) {
+                if (i < board.getColumnValueLength() - 1) {
                     sb.append(charWithSpace("|", maxNumString));
                     sb.append(" ");
                 }
@@ -158,43 +158,37 @@ public class CharacterUI implements UI {
         return sb.toString();
     }
 
-    private String gridRowWithBoardIndex(Board board, int currentColumn, int maxNumString) {
-        int row = board.getRow();
+    /**
+     * 文字が挿入された行を返します.
+     *
+     * @param board         ボードクラス
+     * @param currentRow    この行が何行目か
+     * @param maxNumString  挿入したいスペースの数
+     * @param emptyGridChar 埋まっていない場所に入れるStringです.
+     *                      nullを指定すると、そこにBoardIndexを表示します
+     * @return 行データを返します
+     */
+    private String gridRow(Board board, int currentRow, int maxNumString, String emptyGridChar) {
+        int row = board.getRowValueLength();
         StringBuilder sb = new StringBuilder();
 
-        for (int currentRow = 0; currentRow < row; currentRow++) {
-            int currentIndex = currentRow + (currentColumn * row);
-            if (currentRow != 0) {
+        for (int currentCol = 0; currentCol < row; currentCol++) {
+            int currentIndex = currentCol + (currentRow * row);
+            if (currentCol != 0) {
                 sb.append("-");
             }
             if (board.isFilled(currentIndex)) {
                 String filledChar = playerIdToString(board.getPlayerId(currentIndex));
                 sb.append(charWithSpace(filledChar, maxNumString));
             } else {
-                sb.append(charWithSpace(String.valueOf(currentIndex), maxNumString));
+                if (emptyGridChar != null) {
+                    sb.append(charWithSpace(emptyGridChar, maxNumString));
+                } else {
+                    sb.append(charWithSpace(String.valueOf(currentIndex), maxNumString));
+                }
             }
         }
         return sb.toString();
-    }
-
-    private String gridRow(Board board, int currentColumn, int maxNumString, String emptyGridChar) {
-        int row = board.getRow();
-        StringBuilder sb = new StringBuilder();
-
-        for (int currentRow = 0; currentRow < row; currentRow++) {
-            int currentIndex = currentRow + (currentColumn * row);
-            if (currentRow != 0) {
-                sb.append("-");
-            }
-            if (board.isFilled(currentIndex)) {
-                String filledChar = playerIdToString(board.getPlayerId(currentIndex));
-                sb.append(charWithSpace(filledChar, maxNumString));
-            } else {
-                sb.append(charWithSpace(emptyGridChar, maxNumString));
-            }
-        }
-        return sb.toString();
-
     }
 
     /**
@@ -202,7 +196,7 @@ public class CharacterUI implements UI {
      * 文字列(string)が足りないスペースを文字列が真ん中に来るように入れて返す
      * もしスペースが前後に均等に分けて挿入できない場合は、前に数合わせで入る.
      *
-     * @param string       プレイヤーID
+     * @param string       文字列(半角でないと崩れます)
      * @param maxNumString 挿入したいスペースの数
      * @return スペースが挿入されたstring
      */

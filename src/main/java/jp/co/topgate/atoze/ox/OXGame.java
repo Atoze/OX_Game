@@ -100,9 +100,9 @@ public class OXGame {
 
     private int getCenterIndex(Board board) {
         board.getSize();
-        int rowMid = board.getRow() / 2;
-        int colMid = board.getColumn() / 2;
-        return (board.getRow() * colMid) + rowMid;
+        int rowMid = board.getRowValueLength() / 2;
+        int colMid = board.getColumnValueLength() / 2;
+        return (board.getRowValueLength() * colMid) + rowMid;
     }
 
     public boolean accept(Board board, int selectedGridIndex, int currentTurn) {
@@ -111,12 +111,12 @@ public class OXGame {
             int center = getCenterIndex(board);
             aroundCenter.add(center - 1);
             aroundCenter.add(center + 1);
-            aroundCenter.add(center - board.getRow());
-            aroundCenter.add(center - board.getRow() + 1);
-            aroundCenter.add(center - board.getRow() - 1);
-            aroundCenter.add(center + board.getRow());
-            aroundCenter.add(center + board.getRow() + 1);
-            aroundCenter.add(center + board.getRow() - 1);
+            aroundCenter.add(center - board.getRowValueLength());
+            aroundCenter.add(center - board.getRowValueLength() + 1);
+            aroundCenter.add(center - board.getRowValueLength() - 1);
+            aroundCenter.add(center + board.getRowValueLength());
+            aroundCenter.add(center + board.getRowValueLength() + 1);
+            aroundCenter.add(center + board.getRowValueLength() - 1);
             if (!aroundCenter.contains(selectedGridIndex)) {
                 return false;
             }

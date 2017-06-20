@@ -72,12 +72,12 @@ public class SquaredBoard extends Board {
     }
 
     @Override
-    public int getRow() {
+    public int getRowValueLength() {
         return sideLength;
     }
 
     @Override
-    public int getColumn() {
+    public int getColumnValueLength() {
         return sideLength;
     }
 

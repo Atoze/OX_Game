@@ -50,6 +50,8 @@ public class Timer extends Thread {
     /**
      * timePrintInterval秒毎にtimeLeftを表示します.
      *
+     *
+     * @param maxTime           カウントダウンが始まった数値
      * @param timeLeft          現在のタイマーの値
      * @param timePrintInterval 表示する間隔
      */
