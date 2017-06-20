@@ -33,7 +33,7 @@ public class EasyCPUTest {
         Board board = new SquaredBoard(3);
         UI ui = new CharacterUI();
         game = new OXGame(board, players, 3, ui, 10);
-        timer = new Timer(10, 1, ui);
+        timer = new Timer(10, 1);
     }
 
     @Test

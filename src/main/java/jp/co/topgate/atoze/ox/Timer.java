@@ -9,18 +9,18 @@ public class Timer extends Thread {
     private boolean done = false;
 
     private final int sec;
-    private final UI ui;
     private final boolean noCount;
     private final int timePrintInterval;
+
+    private boolean isPastOneSec = false;
 
     /**
      * コンストラクタ
      *
      * @param sec               カウントダウンする時間. 0より下の数値を指定すると、カウントダウンを行いません.
      * @param timePrintInterval これ秒毎に残り秒数を表示する
-     * @param ui                残り秒数を表示する際のインターフェース
      */
-    public Timer(int sec, int timePrintInterval, UI ui) {
+    public Timer(int sec, int timePrintInterval) {
         this.sec = sec;
         if (sec < 0) {
             noCount = true;
@@ -29,7 +29,6 @@ public class Timer extends Thread {
             noCount = false;
             count = sec;
         }
-        this.ui = ui;
         this.timePrintInterval = timePrintInterval;
     }
 
@@ -42,23 +41,22 @@ public class Timer extends Thread {
             }
             if (!noCount) {
                 count--;
-                printTimeLeft(sec, count, timePrintInterval);
+                if (!isPastOneSec) {
+                    isPastOneSec = true;
+                }
             }
         }
     }
 
     /**
-     * timePrintInterval秒毎にtimeLeftを表示します.
-     *
-     *
-     * @param maxTime           カウントダウンが始まった数値
-     * @param timeLeft          現在のタイマーの値
-     * @param timePrintInterval 表示する間隔
+     * timePrintIntervalで指定した時間が経過したら、trueで返します.
      */
-    void printTimeLeft(int maxTime, int timeLeft, int timePrintInterval) {
-        if (0 == timePrintInterval || 0 == (maxTime - timeLeft - timePrintInterval) % (timePrintInterval)) {
-            ui.printTimeLeft(timeLeft);
+    public boolean printTimeLeft() {
+        if ((0 == timePrintInterval || 0 == (sec - count - timePrintInterval) % (timePrintInterval)) && isPastOneSec) {
+            isPastOneSec = false;
+            return true;
         }
+        return false;
     }
 
     public int getTime() {

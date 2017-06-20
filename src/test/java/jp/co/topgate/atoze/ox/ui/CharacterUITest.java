@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
  * Created by atoze on 2017/06/15.
  */
 public class CharacterUITest {
-    Timer timer = new Timer(1, 0, new CharacterUI());
+    Timer timer = new Timer(1, 0);
     private final static String LINE_FEED = System.getProperty("line.separator");
 
     @Test
@@ -45,7 +45,7 @@ public class CharacterUITest {
     @Test
     public void 入力時間切れテスト() throws InvalidBoardSizeException, IOException {
         UI ui = new CharacterUI();
-        Timer timer = new Timer(1, 0, ui);
+        Timer timer = new Timer(1, 0);
         timer.start();
         //挿入
         InputStream input = new ByteArrayInputStream(("").getBytes());
@@ -56,7 +56,7 @@ public class CharacterUITest {
     @Test
     public void 文字列入力されたテスト() throws InvalidBoardSizeException, IOException {
         UI ui = new CharacterUI();
-        Timer timer = new Timer(1, 0, ui);
+        Timer timer = new Timer(1, 0);
         timer.start();
         //挿入
         InputStream input = new ByteArrayInputStream(("hoge" + LINE_FEED).getBytes());
