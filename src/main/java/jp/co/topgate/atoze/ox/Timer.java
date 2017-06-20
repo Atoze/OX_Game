@@ -54,6 +54,12 @@ public class Timer extends Thread {
     public boolean printTimeLeft() {
         if ((0 == timePrintInterval || 0 == (sec - count - timePrintInterval) % (timePrintInterval)) && isPastOneSec) {
             isPastOneSec = false;
+            /*
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                return false;
+            }*/
             return true;
         }
         return false;
