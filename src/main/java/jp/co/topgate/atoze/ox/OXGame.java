@@ -17,14 +17,12 @@ public class OXGame {
 
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
+    private static final int TIME_PRINT_INTERVAL = 4;
 
     private final int REQUIRED_ALIGNED_NUM;
     private final int MAX_TURN;
 
     private final int TIME_LIMIT;
-
-    //private int currentTurn = 0;
-    //private Player currentPlayer;
 
     public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
@@ -73,7 +71,7 @@ public class OXGame {
             if (currentTurn == 1) {
                 boardIndex = getCenterIndex(board);
             } else {
-                Timer timer = new Timer(TIME_LIMIT, 5, ui);
+                Timer timer = new Timer(TIME_LIMIT, TIME_PRINT_INTERVAL, ui);
                 timer.start();
                 while (timer.getTime() > 0) {
                     boardIndex = currentPlayer.selectBoardIndex(this, timer);

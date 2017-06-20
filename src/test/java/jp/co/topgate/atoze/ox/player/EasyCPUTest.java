@@ -1,9 +1,6 @@
 package jp.co.topgate.atoze.ox.player;
 
-import jp.co.topgate.atoze.ox.Board;
-import jp.co.topgate.atoze.ox.OXGame;
-import jp.co.topgate.atoze.ox.Player;
-import jp.co.topgate.atoze.ox.UI;
+import jp.co.topgate.atoze.ox.*;
 import jp.co.topgate.atoze.ox.board.SquaredBoard;
 import jp.co.topgate.atoze.ox.board.TestBoard;
 import jp.co.topgate.atoze.ox.exception.InvalidBoardSizeException;
@@ -26,6 +23,7 @@ import static org.junit.Assert.assertThat;
  */
 public class EasyCPUTest {
     OXGame game;
+    Timer timer;
 
     @Before
     public void OXGameコンストラクタ作成() throws InvalidBoardSizeException, InvalidPlayerIdException, PlayersOutOfBoundsException, RequiredNumberAlignedOutOfBoundsException {
@@ -34,7 +32,8 @@ public class EasyCPUTest {
         players.add(new EasyCPU(2));
         Board board = new SquaredBoard(3);
         UI ui = new CharacterUI();
-        game = new OXGame(board, players, 3, ui);
+        game = new OXGame(board, players, 3, ui, 10);
+        timer = new Timer(10, 1, ui);
     }
 
     @Test
@@ -44,7 +43,7 @@ public class EasyCPUTest {
 
         int i = 0;
         while (i < 100) {
-            assertThat(player.selectBoardIndex(game, ), is(both(greaterThan(-1)).and(lessThan(9))));
+            assertThat(player.selectBoardIndex(game, timer), is(both(greaterThan(-1)).and(lessThan(9))));
             i++;
         }
     }
@@ -55,7 +54,7 @@ public class EasyCPUTest {
         Board board = new TestBoard(3, 4);
         int i = 0;
         while (i < 100) {
-            assertThat(player.selectBoardIndex(game, ), is(both(greaterThan(-1)).and(lessThan(12))));
+            assertThat(player.selectBoardIndex(game, timer), is(both(greaterThan(-1)).and(lessThan(12))));
             i++;
         }
     }

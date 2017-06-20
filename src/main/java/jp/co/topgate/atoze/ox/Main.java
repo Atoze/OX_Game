@@ -17,7 +17,6 @@ public class Main {
         List<Player> players = new ArrayList<>();
         UI ui = new CharacterUI();
         players.add(new EasyCPU(UI.O));
-        //players.add(new EasyCPU(2));
         players.add(new HumanPlayer(UI.X, ui));
         try {
             playGomoku(players, 11, ui);
@@ -43,7 +42,7 @@ public class Main {
      */
     private static void playGomoku(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
         Board board = new SquaredBoard(gridSize);
-        OXGame game = new OXGame(board, players, 5, ui, 10);
+        OXGame game = new OXGame(board, players, 3, ui, 0);
         game.start();
     }
 }

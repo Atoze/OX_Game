@@ -106,63 +106,125 @@ public class CharacterUI implements UI {
     }
 
     private String boardToString(Board board) {
-        int row = board.getRow();
-        int column = board.getColumn();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                sb.append("[ ");
-                if (board.getPlayerId(j + (i * row)) == board.getDefaultValue()) {
-                    sb.append("   ");
-                } else {
-                    sb.append(playerIdToString(board.getPlayerId(j + (i * row))));
-                }
-                sb.append(" ]");
-            }
-            sb.append(LINE_FEED);
+        int maxNumString = String.valueOf(board.getSize() - 1).length();
+        if (maxNumString < 3) {
+            maxNumString = 3;
         }
+        StringBuilder sb = new StringBuilder();
 
+        for (int i = 0; i < board.getColumn(); i++) {
+            sb.append(LINE_FEED);
+            sb.append(gridRow(board, i, maxNumString, "·"));
+            sb.append(LINE_FEED);
+            for (int j = 0; j < board.getRow(); j++) {
+                if (i < board.getColumn() - 1) {
+                    sb.append(charWithSpace("|", maxNumString));
+                    sb.append(" ");
+                }
+            }
+        }
         return sb.toString();
     }
 
     private String emptyGridIndicatorToString(Board board) {
-        int row = board.getRow();
-        int column = board.getColumn();
-        int maxNumString = String.valueOf(board.getSize()).length();
+        int maxNumString = String.valueOf(board.getSize() - 1).length();
+        if (maxNumString < 3) {
+            maxNumString = 3;
+        }
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < column; i++) {
-            for (int j = 0; j < row; j++) {
-                int currentIndex = j + (i * row);
-                sb.append("[");
-
-                if (board.isFilled(currentIndex)) {
-                    String filledChar = playerIdToString(board.getPlayerId(currentIndex));
-                    sb.append(filledChar);
-                    for (int x = filledChar.length() - 2; x < maxNumString; x++) {
-                        sb.append(" ");
-                    }
-                } else {
-                    sb.append(" ").append(currentIndex);
-                    for (int x = String.valueOf(currentIndex).length(); x <= maxNumString; x++) {
-                        sb.append(" ");
-                    }
-                }
-                sb.append("]");
-            }
+        for (int i = 0; i < board.getColumn(); i++) {
             sb.append(LINE_FEED);
+            sb.append(gridRowWithBoardIndex(board, i, maxNumString));
+            sb.append(LINE_FEED);
+            for (int j = 0; j < board.getRow(); j++) {
+                if (i < board.getColumn() - 1) {
+                    sb.append(charWithSpace("|", maxNumString));
+                    sb.append(" ");
+                }
+            }
         }
         return sb.toString();
     }
 
+    private String gridRowWithBoardIndex(Board board, int currentColumn, int maxNumString) {
+        int row = board.getRow();
+        StringBuilder sb = new StringBuilder();
+
+        for (int currentRow = 0; currentRow < row; currentRow++) {
+            int currentIndex = currentRow + (currentColumn * row);
+            if (currentRow != 0) {
+                sb.append("-");
+            }
+            if (board.isFilled(currentIndex)) {
+                String filledChar = playerIdToString(board.getPlayerId(currentIndex));
+                sb.append(charWithSpace(filledChar, maxNumString));
+            } else {
+                sb.append(charWithSpace(String.valueOf(currentIndex), maxNumString));
+            }
+        }
+        return sb.toString();
+    }
+
+    private String gridRow(Board board, int currentColumn, int maxNumString, String emptyGridChar) {
+        int row = board.getRow();
+        StringBuilder sb = new StringBuilder();
+
+        for (int currentRow = 0; currentRow < row; currentRow++) {
+            int currentIndex = currentRow + (currentColumn * row);
+            if (currentRow != 0) {
+                sb.append("-");
+            }
+            if (board.isFilled(currentIndex)) {
+                String filledChar = playerIdToString(board.getPlayerId(currentIndex));
+                sb.append(charWithSpace(filledChar, maxNumString));
+            } else {
+                sb.append(charWithSpace(emptyGridChar, maxNumString));
+            }
+        }
+        return sb.toString();
+
+    }
+
+    /**
+     * 文字列と最大文字列の長さを揃えるためのメソッド.
+     * 文字列(string)が足りないスペースを文字列が真ん中に来るように入れて返す
+     * もしスペースが前後に均等に分けて挿入できない場合は、前に数合わせで入る.
+     *
+     * @param string       プレイヤーID
+     * @param maxNumString 挿入したいスペースの数
+     * @return スペースが挿入されたstring
+     */
+    private String charWithSpace(String string, int maxNumString) {
+        StringBuilder sb = new StringBuilder();
+        int spaceLength = maxNumString - string.length();
+        if (spaceLength % 2 != 0) {
+            sb.append(" ");
+        }
+        for (int frontSpace = 0; frontSpace < spaceLength / 2; frontSpace++) {
+            sb.append(" ");
+        }
+        sb.append(string);
+        for (int backSpace = 0; backSpace < spaceLength / 2; backSpace++) {
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * プレイヤーIDをそれぞれ対応したボード状のマスとしての形に変換して返します.
+     *
+     * @param playerId プレイヤーID
+     * @return 表示ボード用マス
+     */
     private static String playerIdToString(int playerId) {
         switch (playerId) {
             case O:
-                return " ● ";
+                return "●";
             case X:
-                return " ○ ";
+                return "○";
             default:
-                return " P" + Integer.toString(playerId) + " ";
+                return "P" + Integer.toString(playerId);
         }
     }
 }

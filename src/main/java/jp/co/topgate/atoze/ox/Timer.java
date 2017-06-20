@@ -52,7 +52,7 @@ public class Timer extends Thread {
      * @param timePrintInterval 表示する間隔
      */
     void printTimeLeft(int timeLeft, int timePrintInterval) {
-        if (0 == timeLeft % timePrintInterval) {
+        if (0 == timePrintInterval || 0 == timeLeft % timePrintInterval) {
             ui.printTimeLeft(timeLeft);
         }
     }
