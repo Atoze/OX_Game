@@ -159,13 +159,13 @@ public class CharacterUI implements UI {
     }
 
     /**
-     * 文字が挿入された行を返します.
+     * CUI表示用に、文字が挿入され整えられた行を返します.
      *
      * @param board         ボードクラス
      * @param currentRow    この行が何行目か
      * @param maxNumString  挿入したいスペースの数
      * @param emptyGridChar 埋まっていない場所に入れるStringです.
-     *                      nullを指定すると、そこにBoardIndexを表示します
+     *                      nullを指定すると、そこに対応するBoardIndexを表示します
      * @return 行データを返します
      */
     private String gridRow(Board board, int currentRow, int maxNumString, String emptyGridChar) {
