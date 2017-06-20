@@ -32,7 +32,7 @@ public class Main {
      */
     private static void playGomoku(List<Player> players, int gridSize, UI ui, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
         Board board = new SquaredBoard(gridSize);
-        OXGame game = new OXGame(board, players, 3, ui, timeLimit);
+        OXGame game = new OXGame(board, players, 5, ui, timeLimit);
         game.start();
     }
 }
