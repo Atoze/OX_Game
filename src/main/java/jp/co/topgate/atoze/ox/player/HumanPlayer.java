@@ -25,7 +25,7 @@ public class HumanPlayer implements Player {
 
     @Override
     public int selectBoardIndex(OXGame game, Timer timer) {
-        return ui.selectBoardIndex(game.getBoard(), timer);
+        return ui.selectBoardIndex(game.getBoard().getDefaultValue(), timer);
     }
 
     @Override

@@ -24,14 +24,15 @@ public class CharacterUI implements UI {
     }
 
     @Override
-    public int selectBoardIndex(Board board, Timer timer) {
+    public int selectBoardIndex(int defaultValue, Timer timer) {
         System.out.println("数字を入力してエンターを押してください");
-        return select(board, timer);
+        return select(defaultValue, timer);
     }
 
-    private int select(Board board, Timer timer) {
+    private int select(int defaultValue, Timer timer) {
         BufferedInputStream in = new BufferedInputStream(System.in);
         int input = 0;
+        int boardIndex;
         StringBuilder sb = new StringBuilder();
         while (timer.getTime() > 0) {
             try {
@@ -41,25 +42,35 @@ public class CharacterUI implements UI {
                         break;
                     }
                     sb.append((char) input);
-                    timer.shutdown();
                 }
             } catch (IOException e) {
-                return board.getDefaultValue();
+                return defaultValue;
             }
         }
-        if (sb.toString().isEmpty()) {
-            return board.getDefaultValue();
+        try {
+            boardIndex = Integer.parseInt(sb.toString());
+        } catch (NumberFormatException e) {
+            return defaultValue;
         }
-        return Integer.parseInt(sb.toString());
+        return boardIndex;
     }
 
     @Override
-    public void printStartTurn(Player player, List<Player> players, Board board) {
+    public void printStartTurn(int currentTurn, Player player, List<Player> players, Board board) {
         StringBuilder sb = new StringBuilder();
         sb.append(playerIdToString(player.getID())).append("側 ");
-        sb.append(player.getName()).append("のターンです").append(LINE_FEED);
+        sb.append(player.getName()).append("のターンです.").append(LINE_FEED);
+        switch (currentTurn) {
+            case 1:
+                sb.append("最初のターンは、コマは自動的に真ん中に置かれます.");
+                break;
+            case 2:
+                sb.append("このターンでは、最初のコマから隣接した場所にしか置けません.");
+            default:
+                sb.append("置く場所の数字を指定してください.");
+        }
+        sb.append(LINE_FEED);
         sb.append(emptyGridIndicatorToString(board));
-
         System.out.println(sb.toString());
     }
 
@@ -219,9 +230,9 @@ public class CharacterUI implements UI {
      */
     private static String playerIdToString(int playerId) {
         switch (playerId) {
-            case O:
+            case BLACK:
                 return "●";
-            case X:
+            case WHITE:
                 return "○";
             default:
                 return "P" + Integer.toString(playerId);

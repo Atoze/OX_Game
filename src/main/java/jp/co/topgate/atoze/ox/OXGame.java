@@ -5,6 +5,7 @@ import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,7 +66,7 @@ public class OXGame {
         while (true) {
             Player currentPlayer = players.get(currentTurn % players.size());
             currentTurn++;
-            ui.printStartTurn(currentPlayer, players, board);
+            ui.printStartTurn(currentTurn, currentPlayer, players, board);
 
             int boardIndex = board.getDefaultValue();
             if (currentTurn == 1) {
@@ -75,13 +76,15 @@ public class OXGame {
                 timer.start();
                 while (timer.getTime() > 0) {
                     boardIndex = currentPlayer.selectBoardIndex(this, timer);
-                    if (accept(board, boardIndex)) {
+                    if (accept(board, boardIndex, currentTurn)) {
                         break;
                     }
                 }
                 timer.shutdown();
                 if (boardIndex == board.getDefaultValue()) {
-                    boardIndex = (int) (Math.random() * board.getSize());
+                    while (!accept(board, boardIndex, currentTurn)) {
+                        boardIndex = (int) (Math.random() * board.getSize());
+                    }
                 }
             }
             board.insert(currentPlayer.getID(), boardIndex);
@@ -99,12 +102,26 @@ public class OXGame {
         board.getSize();
         int rowMid = board.getRow() / 2;
         int colMid = board.getColumn() / 2;
-        int mid = (board.getRow() * colMid) + rowMid;
-        System.out.println(mid);
-        return mid;
+        return (board.getRow() * colMid) + rowMid;
     }
 
-    public boolean accept(Board board, int selectedGridIndex) {
+    public boolean accept(Board board, int selectedGridIndex, int currentTurn) {
+        if (currentTurn == 2) {
+            List<Integer> aroundCenter = new ArrayList<>();
+            int center = getCenterIndex(board);
+            aroundCenter.add(center - 1);
+            aroundCenter.add(center + 1);
+            aroundCenter.add(center - board.getRow());
+            aroundCenter.add(center - board.getRow() + 1);
+            aroundCenter.add(center - board.getRow() - 1);
+            aroundCenter.add(center + board.getRow());
+            aroundCenter.add(center + board.getRow() + 1);
+            aroundCenter.add(center + board.getRow() - 1);
+            if (!aroundCenter.contains(selectedGridIndex)) {
+                return false;
+            }
+        }
+
         if (selectedGridIndex < 0 || selectedGridIndex >= board.getSize()) {
             return false;
         }
