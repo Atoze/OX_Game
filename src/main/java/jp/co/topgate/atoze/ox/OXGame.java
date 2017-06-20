@@ -18,7 +18,7 @@ public class OXGame {
 
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
-    private static final int TIME_PRINT_INTERVAL = 4;
+    private static final int TIME_PRINT_INTERVAL = 5;
 
     private final int REQUIRED_ALIGNED_NUM;
     private final int MAX_TURN;

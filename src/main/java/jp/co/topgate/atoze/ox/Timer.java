@@ -8,6 +8,7 @@ public class Timer extends Thread {
     private int count = 0;
     private boolean done = false;
 
+    private final int sec;
     private final UI ui;
     private final boolean noCount;
     private final int timePrintInterval;
@@ -20,6 +21,7 @@ public class Timer extends Thread {
      * @param ui                残り秒数を表示する際のインターフェース
      */
     public Timer(int sec, int timePrintInterval, UI ui) {
+        this.sec = sec;
         if (sec < 0) {
             noCount = true;
             count = 1;
@@ -40,7 +42,7 @@ public class Timer extends Thread {
             }
             if (!noCount) {
                 count--;
-                printTimeLeft(count, timePrintInterval);
+                printTimeLeft(sec, count, timePrintInterval);
             }
         }
     }
@@ -51,8 +53,8 @@ public class Timer extends Thread {
      * @param timeLeft          現在のタイマーの値
      * @param timePrintInterval 表示する間隔
      */
-    void printTimeLeft(int timeLeft, int timePrintInterval) {
-        if (0 == timePrintInterval || 0 == timeLeft % timePrintInterval) {
+    void printTimeLeft(int maxTime, int timeLeft, int timePrintInterval) {
+        if (0 == timePrintInterval || 0 == (maxTime - timeLeft - timePrintInterval) % (timePrintInterval)) {
             ui.printTimeLeft(timeLeft);
         }
     }
