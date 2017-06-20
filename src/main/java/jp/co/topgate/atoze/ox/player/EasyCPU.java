@@ -3,6 +3,7 @@ package jp.co.topgate.atoze.ox.player;
 import jp.co.topgate.atoze.ox.Board;
 import jp.co.topgate.atoze.ox.OXGame;
 import jp.co.topgate.atoze.ox.Player;
+import jp.co.topgate.atoze.ox.Timer;
 
 /**
  * 空いてるところをランダムに指定してくるCPUです.
@@ -15,7 +16,7 @@ public class EasyCPU implements Player {
     }
 
     @Override
-    public int selectBoardIndex(OXGame game) {
+    public int selectBoardIndex(OXGame game, Timer timer) {
         Board board = game.getBoard();
         return (int) (Math.random() * board.getSize());
     }

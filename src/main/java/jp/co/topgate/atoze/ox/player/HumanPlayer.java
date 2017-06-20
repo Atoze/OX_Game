@@ -2,6 +2,7 @@ package jp.co.topgate.atoze.ox.player;
 
 import jp.co.topgate.atoze.ox.OXGame;
 import jp.co.topgate.atoze.ox.Player;
+import jp.co.topgate.atoze.ox.Timer;
 import jp.co.topgate.atoze.ox.UI;
 
 /**
@@ -23,8 +24,8 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int selectBoardIndex(OXGame game) {
-        return ui.selectBoardIndex();
+    public int selectBoardIndex(OXGame game, Timer timer) {
+        return ui.selectBoardIndex(game.getBoard().getDefaultValue(), timer);
     }
 
     @Override

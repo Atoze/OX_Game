@@ -16,11 +16,10 @@ public class Main {
     public static void main(String[] args) {
         List<Player> players = new ArrayList<>();
         UI ui = new CharacterUI();
-        players.add(new EasyCPU(UI.O));
-        //players.add(new EasyCPU(2));
-        players.add(new HumanPlayer(UI.X, ui));
+        players.add(new EasyCPU(UI.BLACK));
+        players.add(new HumanPlayer(UI.WHITE, ui));
         try {
-            playSquaredBoard(players, 3, ui);
+            playGomoku(players, 11, ui, 20);
         } catch (PlayersOutOfBoundsException | InvalidPlayerIdException | InvalidBoardSizeException | BoardIndexOutOfBoundsException | RequiredNumberAlignedOutOfBoundsException e) {
             e.printStackTrace();
             System.exit(1);
@@ -28,12 +27,12 @@ public class Main {
     }
 
     /**
-     * n*nのボードでn個並んだら勝利条件で遊ぶ場合
+     * n*nのボードで5個並んだら勝利条件で遊ぶ場合
      * //TODO:いずれOXGameFactoryみたいなのを作った方がよいかもしれない
      */
-    private static void playSquaredBoard(List<Player> players, int gridSize, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
+    private static void playGomoku(List<Player> players, int gridSize, UI ui, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, BoardIndexOutOfBoundsException, InvalidBoardSizeException, RequiredNumberAlignedOutOfBoundsException {
         Board board = new SquaredBoard(gridSize);
-        OXGame game = new OXGame(board, players, gridSize, ui);
+        OXGame game = new OXGame(board, players, 3, ui, timeLimit);
         game.start();
     }
 }

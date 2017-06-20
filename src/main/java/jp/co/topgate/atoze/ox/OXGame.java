@@ -5,6 +5,7 @@ import jp.co.topgate.atoze.ox.exception.InvalidPlayerIdException;
 import jp.co.topgate.atoze.ox.exception.PlayersOutOfBoundsException;
 import jp.co.topgate.atoze.ox.exception.RequiredNumberAlignedOutOfBoundsException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,14 +18,14 @@ public class OXGame {
 
     private static final int PLAYER_MAX_NUM = 2;
     private static final int PLAYER_MIN_NUM = 2;
+    private static final int TIME_PRINT_INTERVAL = 5;
 
     private final int REQUIRED_ALIGNED_NUM;
     private final int MAX_TURN;
 
-    //private int currentTurn = 0;
-    //private Player currentPlayer;
+    private final int TIME_LIMIT;
 
-    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
+    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
 
         this.ui = ui;
@@ -53,10 +54,11 @@ public class OXGame {
         }
         this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
         this.MAX_TURN = maxTurn;
+        this.TIME_LIMIT = timeLimit;
     }
 
-    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
-        this(board, players, requiredAlignedNum, ui, board.getSize());
+    public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
+        this(board, players, requiredAlignedNum, ui, board.getSize(), timeLimit);
     }
 
     void start() throws BoardIndexOutOfBoundsException, InvalidPlayerIdException {
@@ -64,13 +66,25 @@ public class OXGame {
         while (true) {
             Player currentPlayer = players.get(currentTurn % players.size());
             currentTurn++;
-            ui.printStartTurn(currentPlayer, players, board);
+            ui.printStartTurn(currentTurn, currentPlayer, players, board);
 
-            int boardIndex;
-            while (true) {
-                boardIndex = currentPlayer.selectBoardIndex(this);
-                if (accept(board, boardIndex)) {
-                    break;
+            int boardIndex = board.getDefaultValue();
+            if (currentTurn == 1) {
+                boardIndex = getCenterIndex(board);
+            } else {
+                Timer timer = new Timer(TIME_LIMIT, TIME_PRINT_INTERVAL, ui);
+                timer.start();
+                while (timer.getTime() > 0) {
+                    boardIndex = currentPlayer.selectBoardIndex(this, timer);
+                    if (accept(board, boardIndex, currentTurn)) {
+                        break;
+                    }
+                }
+                timer.shutdown();
+                if (boardIndex == board.getDefaultValue()) {
+                    while (!accept(board, boardIndex, currentTurn)) {
+                        boardIndex = (int) (Math.random() * board.getSize());
+                    }
                 }
             }
             board.insert(currentPlayer.getID(), boardIndex);
@@ -84,7 +98,30 @@ public class OXGame {
         }
     }
 
-    public boolean accept(Board board, int selectedGridIndex) {
+    private int getCenterIndex(Board board) {
+        board.getSize();
+        int rowMid = board.getRowValueLength() / 2;
+        int colMid = board.getColumnValueLength() / 2;
+        return (board.getRowValueLength() * colMid) + rowMid;
+    }
+
+    public boolean accept(Board board, int selectedGridIndex, int currentTurn) {
+        if (currentTurn == 2) {
+            List<Integer> aroundCenter = new ArrayList<>();
+            int center = getCenterIndex(board);
+            aroundCenter.add(center - 1);
+            aroundCenter.add(center + 1);
+            aroundCenter.add(center - board.getRowValueLength());
+            aroundCenter.add(center - board.getRowValueLength() + 1);
+            aroundCenter.add(center - board.getRowValueLength() - 1);
+            aroundCenter.add(center + board.getRowValueLength());
+            aroundCenter.add(center + board.getRowValueLength() + 1);
+            aroundCenter.add(center + board.getRowValueLength() - 1);
+            if (!aroundCenter.contains(selectedGridIndex)) {
+                return false;
+            }
+        }
+
         if (selectedGridIndex < 0 || selectedGridIndex >= board.getSize()) {
             return false;
         }

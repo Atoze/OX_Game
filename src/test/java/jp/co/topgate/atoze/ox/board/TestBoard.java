@@ -35,12 +35,12 @@ public class TestBoard extends Board {
     }
 
     @Override
-    public int getRow() {
+    public int getRowValueLength() {
         return row;
     }
 
     @Override
-    public int getColumn() {
+    public int getColumnValueLength() {
         return column;
     }
 

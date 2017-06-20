@@ -20,14 +20,14 @@ public abstract class Board {
      *
      * @return 行数
      */
-    public abstract int getRow();
+    public abstract int getRowValueLength();
 
     /**
      * ボードの列数を返します.
      *
      * @return 列数
      */
-    public abstract int getColumn();
+    public abstract int getColumnValueLength();
 
     /**
      * このボードが持つ最長辺を返します.
