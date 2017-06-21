@@ -33,8 +33,12 @@ public class CharacterUI implements UI {
         BufferedInputStream in = new BufferedInputStream(System.in);
         int input = 0;
         int boardIndex;
+
         StringBuilder sb = new StringBuilder();
         while (timer.getTime() > 0) {
+            if(timer.printTimeLeft()){
+                printTimeLeft(timer.getTime());
+            }
             try {
                 if (0 < (in.available())) {
                     input = in.read();

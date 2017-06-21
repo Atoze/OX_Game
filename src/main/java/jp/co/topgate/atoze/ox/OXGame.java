@@ -20,10 +20,10 @@ public class OXGame {
     private static final int PLAYER_MIN_NUM = 2;
     private static final int TIME_PRINT_INTERVAL = 5;
 
-    private final int REQUIRED_ALIGNED_NUM;
-    private final int MAX_TURN;
+    private final int requiredAlignedNum;
+    private final int maxTurn;
 
-    private final int TIME_LIMIT;
+    private final int timeLimit;
 
     public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int maxTurn, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
         this.board = board;
@@ -52,9 +52,9 @@ public class OXGame {
         if (board.getMaxSideLength() < requiredAlignedNum) {
             throw new RequiredNumberAlignedOutOfBoundsException("勝利条件に用いられる一列に必要な数が、ボード上に並べる数を超えています");
         }
-        this.REQUIRED_ALIGNED_NUM = requiredAlignedNum;
-        this.MAX_TURN = maxTurn;
-        this.TIME_LIMIT = timeLimit;
+        this.requiredAlignedNum = requiredAlignedNum;
+        this.maxTurn = maxTurn;
+        this.timeLimit = timeLimit;
     }
 
     public OXGame(Board board, List<Player> players, int requiredAlignedNum, UI ui, int timeLimit) throws PlayersOutOfBoundsException, InvalidPlayerIdException, RequiredNumberAlignedOutOfBoundsException {
@@ -72,13 +72,10 @@ public class OXGame {
             if (currentTurn == 1) {
                 boardIndex = getCenterIndex(board);
             } else {
-                Timer timer = new Timer(TIME_LIMIT, TIME_PRINT_INTERVAL, ui);
+                Timer timer = new Timer(timeLimit, TIME_PRINT_INTERVAL);
                 timer.start();
-                while (timer.getTime() > 0) {
+                while (timer.getTime() > 0 && !accept(board, boardIndex, currentTurn)) {
                     boardIndex = currentPlayer.selectBoardIndex(this, timer);
-                    if (accept(board, boardIndex, currentTurn)) {
-                        break;
-                    }
                 }
                 timer.shutdown();
                 if (boardIndex == board.getDefaultValue()) {
@@ -156,7 +153,7 @@ public class OXGame {
     }
 
     public boolean isWin(Player player, int boardIndex) {
-        return board.isAligned(player.getID(), boardIndex, REQUIRED_ALIGNED_NUM);
+        return board.isAligned(player.getID(), boardIndex, requiredAlignedNum);
     }
 
     public boolean isLose(Player player, int boardIndex) {
@@ -164,7 +161,7 @@ public class OXGame {
     }
 
     public boolean isDraw(int currentTurn) {
-        return (currentTurn >= board.getSize() || currentTurn >= MAX_TURN);
+        return (currentTurn >= board.getSize() || currentTurn >= maxTurn);
     }
 
     public Board getBoard() {
